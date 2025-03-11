@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Simulator</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body { font-family: monospace; background: black; color: white; }
+        #output { white-space: pre-wrap; height: 300px; overflow-y: scroll; border: 1px solid gray; padding: 10px; }
+        input { width: 100%; background: black; color: white; border: none; padding: 5px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div id="output">Welcome to the terminal!</div>
+    <input type="text" id="command" placeholder="Type a command..." autofocus>
+
+    <script>
+        const socket = io();
+        const outputDiv = document.getElementById("output");
+        const inputField = document.getElementById("command");
+
+        inputField.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                let command = inputField.value.trim();
+                if (command) {
+                    outputDiv.innerHTML += `\n> ${command}`;
+                    socket.emit("command", command);
+                    inputField.value = "";
+                }
+            }
+        });
+
+        socket.on("output", function(data) {
+            outputDiv.innerHTML += `\n${data}`;
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+        });
+    </script>
+</body>
+</html>

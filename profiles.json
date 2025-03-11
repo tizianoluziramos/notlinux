@@ -1,0 +1,10 @@
+{
+  "bootkey": "pc",
+  "enabled": true,
+  "rootpassword": "adminjk123",
+  "default": {
+    "user": "default",
+    "rootAccess": false
+  },
+  "users": {}
+}
