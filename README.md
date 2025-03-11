@@ -1,93 +1,93 @@
 
-# Simulador de Sistema de Archivos en JavaScript
+# The most advanced fake terminal in JavaScript using NodeJS
 
-Este proyecto es un simulador de sistema de archivos y comandos tipo terminal en JavaScript. Permite interactuar con archivos, gestionar directorios, usuarios y contraseñas, todo dentro de un contenedor simulado. El sistema es capaz de ejecutar comandos comunes de terminal como `mkdir`, `rmdir`, `cd`, `sudo`, `nuser`, `ruser`, `net`, `cuser`, `poc`, entre otros.
+This project is a file system and terminal-like command simulator built with JavaScript. It allows interaction with files, directory management, user and password handling, all within a simulated container. The system can execute common terminal commands such as `mkdir`, `rmdir`, `cd`, `sudo`, `nuser`, `ruser`, `net`, `cuser`, `poc`, and others.
 
-## Características
+## Features
 
-- **Gestión de Archivos**: Permite crear, eliminar y explorar archivos y directorios.
-- **Gestión de Usuarios**: Crear, eliminar, y cambiar contraseñas de usuarios.
-- **Simulación de Acceso Root**: Los usuarios pueden obtener privilegios de root mediante comandos `sudo`.
-- **Comandos de Terminal**: Implementación de comandos como `mkdir`, `rmdir`, `cd`, `ls`, `cat`, y más.
-- **Acceso y Permisos**: Los usuarios tienen permisos específicos para interactuar con archivos y directorios. Se pueden ver usuarios y permisos asignados a cada uno.
-- **Interactividad**: Utiliza un terminal simulado con `readline-sync` para la entrada de comandos.
+- **File Management**: Allows creating, deleting, and exploring files and directories.
+- **User Management**: Create, delete, and change user passwords.
+- **Root Access Simulation**: Users can gain root privileges using the `sudo` command.
+- **Terminal Commands**: Implements commands like `mkdir`, `rmdir`, `cd`, `ls`, `cat`, and more.
+- **Access and Permissions**: Users have specific permissions to interact with files and directories. User permissions can be viewed.
+- **Interactivity**: Uses a simulated terminal with `readline-sync` for command input.
 
-## Requisitos
+## Requirements
 
-- Node.js v16 o superior.
-- Dependencias:
+- Node.js v16 or higher.
+- Dependencies:
   - `readline-sync`
   - `chalk`
   - `fs`
   - `path`
 
-## Instalación
+## Installation
 
-1. Clona este repositorio:
-
-   ```bash
-   git clone https://github.com/tu-usuario/nombre-del-repositorio.git
-   ```
-
-2. Navega al directorio del proyecto:
+1. Clone this repository:
 
    ```bash
-   cd nombre-del-repositorio
+   git clone https://github.com/your-username/repository-name.git
    ```
 
-3. Instala las dependencias:
+2. Navigate to the project directory:
+
+   ```bash
+   cd repository-name
+   ```
+
+3. Install the dependencies:
 
    ```bash
    npm install
    ```
 
-## Uso
+## Usage
 
-El script principal es un simulador interactivo de comandos de terminal. Para ejecutar el simulador, simplemente corre el siguiente comando:
+The main script is an interactive terminal command simulator. To run the simulator, simply execute the following command:
 
 ```bash
 node index.js
 ```
 
-### Comandos Disponibles
+### Available Commands
 
-- **`mkdir <nombre>`**: Crea un directorio con el nombre especificado.
-- **`rmdir <nombre>`**: Elimina un directorio.
-- **`cd <ruta>`**: Cambia el directorio actual a la ruta especificada.
-- **`ls`**: Muestra los archivos y directorios en el directorio actual.
-- **`cat <archivo>`**: Muestra el contenido de un archivo.
-- **`sudo <comando>`**: Ejecuta un comando con privilegios de root, si el usuario tiene acceso.
-- **`nuser <nombre>`**: Crea un nuevo usuario.
-- **`ruser <nombre>`**: Elimina un usuario.
-- **`net`**: Muestra los usuarios conectados.
-- **`cuser <nombre>`**: Cambia la contraseña de un usuario.
-- **`poc`**: Muestra los permisos de los usuarios.
-  
-### Ejemplo de Uso
+- **`mkdir <name>`**: Creates a directory with the specified name.
+- **`rmdir <name>`**: Deletes a directory.
+- **`cd <path>`**: Changes the current directory to the specified path.
+- **`ls`**: Lists files and directories in the current directory.
+- **`cat <file>`**: Displays the contents of a file.
+- **`sudo <command>`**: Executes a command with root privileges, if the user has access.
+- **`nuser <name>`**: Creates a new user.
+- **`ruser <name>`**: Deletes a user.
+- **`net`**: Displays the connected users.
+- **`cuser <name>`**: Changes a user's password.
+- **`poc`**: Displays the permissions of users.
+
+### Example Usage
 
 ```bash
-> mkdir proyectos
-> cd proyectos
-> nuser juan
-> sudo mkdir proyectos_juan
+> mkdir projects
+> cd projects
+> nuser john
+> sudo mkdir john_projects
 > ls
 ```
 
-## Estructura del Proyecto
+## Project Structure
 
-- `index.js`: El script principal que ejecuta la simulación del sistema de archivos.
-- `profiles.json`: Contiene la información de los usuarios y sus contraseñas.
-- `commands.js`: Contiene la lógica de los comandos implementados.
-- `utils.js`: Funciones auxiliares para manejar directorios, archivos y usuarios.
+- `index.js`: The main script that runs the file system simulation.
+- `profiles.json`: Contains user information and their passwords.
+- `commands.js`: Contains the logic for the implemented commands.
+- `utils.js`: Helper functions for handling directories, files, and users.
 
-## Contribución
+## Contributing
 
-1. Haz un fork de este repositorio.
-2. Crea una nueva rama (`git checkout -b feature/mi-nueva-funcionalidad`).
-3. Realiza tus cambios y haz commit (`git commit -am 'Añadir nueva funcionalidad'`).
-4. Sube tus cambios (`git push origin feature/mi-nueva-funcionalidad`).
-5. Abre un Pull Request.
+1. Fork this repository.
+2. Create a new branch (`git checkout -b feature/my-new-feature`).
+3. Make your changes and commit them (`git commit -am 'Add new feature'`).
+4. Push your changes (`git push origin feature/my-new-feature`).
+5. Open a Pull Request.
 
-## Licencia
+## License
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
