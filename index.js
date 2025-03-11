@@ -458,12 +458,21 @@ while (true) {
       let newDirPaths = path.join(currentDir, newDir);
 
       if (!newDirPaths.startsWith(path.join(__dirname, "container"))) {
-        console.log("No puedes salir de la carpeta 'container'.");
+        console.log("You cannot navigate outside the 'container' directory.");
       } else {
         try {
           const stats = fs.statSync(newDirPaths);
           if (stats.isDirectory()) {
             currentDir = newDirPaths; // Actualiza la ruta actual
+            // Recalcular displayPath con la nueva ruta
+            relativePath = path.relative(
+              path.join(__dirname, "container"),
+              currentDir
+            );
+            displayPath =
+              relativePath === ""
+                ? "container\\"
+                : `container\\${relativePath.replace(/\\/g, "\\\\")}`;
           } else {
             console.log("This is not a valid directory.");
           }
@@ -512,8 +521,8 @@ while (true) {
           });
         };
 
-        const containerDir =
-          "C:\\Users\\tizia\\OneDrive\\Escritorio\\Proyects\\JavaScript\\COS(Sucess attempt)\\container"; // Define el directorio base 'container'
+        const currentdir = process.cwd(); // Esto obtiene el directorio actual de trabajo
+        const containerDir = path.join(currentdir, "container"); // Combina el directorio actual con 'container'
         listFilesRecursive(containerDir);
         break;
       }
@@ -534,7 +543,7 @@ while (true) {
           });
         }
       } catch (err) {
-        console.log("Error al leer el directorio:", err.message);
+        console.log("Error reading the file:", err.message);
       }
       break;
     case "clear":
