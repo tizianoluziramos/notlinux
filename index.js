@@ -4,14 +4,58 @@ const colorfull = require("./node_boludes/chalk/index.js");
 const fs = require("fs");
 const path = require("path");
 
-let commandCount = {}; // Objeto para contar las ocurrencias de cada comando
-let commandHistory = [];
 let currentDir = path.join(__dirname, "container"); // Raíz de la carpeta "container"
 let computerPassword = fs.readFileSync("./profiles.json", "utf-8");
 computerPassword = JSON.parse(computerPassword);
 let currentUser = computerPassword.default.user;
 let rootPassword = computerPassword.rootpassword;
 let attemps = 0;
+
+function getRelativePath(fullPath) {
+  // Busca la primera aparición de "container" en la ruta
+  const index = fullPath.indexOf("container");
+
+  // Si "container" está en la ruta, la reemplaza por "/turuta"
+  if (index !== -1) {
+    return fullPath.substring(index).replace("container", '\\');
+  }
+
+  // Si no encuentra "container", devuelve la ruta original
+  return fullPath;
+}
+
+function getPromptFormat(user, path) {
+  let commanderFormat = computerPassword.commander || "${user}:${path} > "; // Formato por defecto
+  let relativePath = getRelativePath(path); // Convierte la ruta absoluta a relativa
+
+  return commanderFormat
+    .replace("${user}", colorfull.color.red(user))
+    .replace("${path}", colorfull.color.hex("#00FFFF", relativePath))
+    .replace("tryhackme", colorfull.color.hex(computerPassword.pcnamecolor, "tryhackme"));
+}
+
+function showOSLogo() {
+  console.log(colorfull.color.blue("                  /#\\"));
+  console.log(colorfull.color.blue("                 /###\\"));
+  console.log(colorfull.color.blue("                /#####\\"));
+  console.log(colorfull.color.blue("               /#######\\"));
+  console.log(colorfull.color.blue('              _ "=######\\'));
+  console.log(colorfull.color.blue("             /##=,_\\#####\\"));
+  console.log(colorfull.color.blue("            /#############\\"));
+  console.log(colorfull.color.blue("           /###############\\"));
+  console.log(colorfull.color.blue("          /#################\\"));
+  console.log(colorfull.color.blue("         /###################\\"));
+  console.log(colorfull.color.blue('        /########*"""*########\\'));
+  console.log(colorfull.color.blue("       /#######/       \\#######\\"));
+  console.log(colorfull.color.blue("      /########         ########\\"));
+  console.log(colorfull.color.blue("     /#########         ######m=,_"));
+  console.log(colorfull.color.blue("    /##########         ##########\\"));
+  console.log(colorfull.color.blue("   /######***             ***######\\"));
+  console.log(colorfull.color.blue("  /###**                       **###\\"));
+  console.log(
+    colorfull.color.blue(" /**                               **\\\\")
+  );
+}
 
 function askForPassword() {
   if (attemps === 5) {
@@ -33,6 +77,9 @@ if (computerPassword.enabled === true) {
   askForPassword();
 }
 
+console.clear();
+showOSLogo();
+
 let relativePath = path.relative(path.join(__dirname, "container"), currentDir);
 
 // Si estamos en la raíz de 'container', solo mostrar 'container\'
@@ -41,39 +88,16 @@ let displayPath =
     ? "container\\"
     : `container\\${relativePath.replace(/\\/g, "\\\\")}`;
 
-// Mostrar el prompt con la ruta relativa
-let command = rls.question.question(
-  `${colorfull.color.red(currentUser)}${colorfull.color.dim(
-    ":"
-  )}${colorfull.color.hex("#00FFFF", displayPath)} > `
-);
-let inputParts = command.trim().split(" ");
-let mainCommand = inputParts[0];
-let args = inputParts.slice(1).join(" ");
-commandHistory.push(command);
-
-function addToHistory(command) {
-  commandHistory.push(command);
-  if (commandCount[command]) {
-    commandCount[command]++;
-  } else {
-    commandCount[command] = 1;
-  }
-}
-addToHistory(command);
-console.clear();
 while (true) {
-  let command = rls.question.question(
-    `${colorfull.color.red(currentUser)}${colorfull.color.dim(
-      ":"
-    )}${colorfull.color.hex("#00FFFF", displayPath)} > `
-  );
+  let command = rls.question.question(getPromptFormat(currentUser, currentDir));
 
   let inputParts = command.trim().split(" ");
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
-  commandHistory.push(command);
   switch (mainCommand) {
+    case "oslogo":
+      showOSLogo();
+      break;
     case "find":
       let searchPattern = args.trim();
       if (!searchPattern) {
@@ -109,26 +133,6 @@ while (true) {
         matchingFiles.forEach(file => console.log(file));
       } else {
         console.log(`No files found matching the pattern "${searchPattern}".`);
-      }
-      break;
-    case "clearhistory":
-      commandHistory = [];
-      console.log("Command history has been cleared.");
-      break;
-    case "history":
-      if (commandHistory.length > 0) {
-        console.log("Command history:");
-        // Usamos un Set para eliminar los comandos duplicados
-        const uniqueCommands = [...new Set(commandHistory)];
-
-        uniqueCommands.forEach(cmd => {
-          let count = commandCount[cmd]; // Obtener cuántas veces se ejecutó el comando
-          console.log(`${cmd} (executed ${count} times)`);
-        });
-        break;
-      } else {
-        console.log("No command history available.");
-        break;
       }
       break;
     case "copy":
@@ -339,7 +343,24 @@ while (true) {
       break;
     case "del":
     case "rm":
+      let rmmeme = args.split(" ").map(arg => arg.trim());
       let fileToRemove = args.trim();
+      if (
+        rmmeme[0] === "--no-preserve-root" &&
+        rmmeme[1] === "-rf" &&
+        rmmeme[2] === "/"
+      ) {
+        console.log(
+          colorfull.color.red(
+            "You think im dumb, OF COURSE NO, you cant do that men. Only with sudo :)"
+          )
+        );
+        break;
+      } else if (rmmeme[0] === "-rf" && rmmeme[1] === "/" && !rmmeme[2]) {
+        console.log("rm: it is dangerous to operate recursively on '/'");
+        console.log("rm: use --no-preserve-root to override this failsafe");
+        break;
+      }
       if (!fileToRemove)
         fileToRemove = rls.question.question("Enter the file to remove: ");
 
@@ -555,6 +576,73 @@ while (true) {
       const subCommand = args.split(" ")[0]; // Obtener el primer subcomando (después de sudo)
 
       switch (subCommand) {
+        case "rm":
+          let rmmeme = args.split(" ").map(arg => arg.trim());
+          if (
+            rmmeme[1] === "--no-preserve-root" &&
+            rmmeme[2] === "-rf" &&
+            rmmeme[3] === "/"
+          ) {
+            console.log("We're no strangers to love");
+            console.log("You know the rules and so do I");
+            console.log("A full commitment's what I'm thinkin' of");
+            console.log("You wouldn't get this from any other guy");
+            console.log("I just wanna tell you how I'm feeling");
+            console.log("Gotta make you understand");
+            console.log("Never gonna give you up");
+            console.log("Never gonna let you down");
+            console.log("Never gonna run around and desert you");
+            console.log("Never gonna make you cry");
+            console.log("Never gonna say goodbye");
+            console.log("Never gonna tell a lie and hurt you");
+            console.log("We've known each other for so long");
+            console.log(
+              "Your heart's been aching, but you're too shy to say it"
+            );
+            console.log("Inside, we both know what's been going on");
+            console.log("We know the game and we're gonna play it");
+            console.log("And if you ask me how I'm feeling");
+            console.log("Don't tell me you're too blind to see");
+            console.log("Never gonna give you up");
+            console.log("Never gonna let you down");
+            console.log("Never gonna run around and desert you");
+            console.log("Never gonna make you cry");
+            console.log("Never gonna say goodbye");
+            console.log("Never gonna tell a lie and hurt you");
+            console.log("Never gonna give you up");
+            console.log("Never gonna let you down");
+            console.log("Never gonna run around and desert you");
+            console.log("Never gonna make you cry");
+            console.log("Never gonna say goodbye");
+            console.log("Never gonna tell a lie and hurt you");
+            console.log("We've known each other for so long");
+            console.log(
+              "Your heart's been aching, but you're too shy to say it"
+            );
+            console.log("Inside, we both know what's been going on");
+            console.log("We know the game and we're gonna play it");
+            console.log("I just wanna tell you how I'm feeling");
+            console.log("Gotta make you understand");
+            console.log("Never gonna give you up");
+            console.log("Never gonna let you down");
+            console.log("Never gonna run around and desert you");
+            console.log("Never gonna make you cry");
+            console.log("Never gonna say goodbye");
+            console.log("Never gonna tell a lie and hurt you");
+            console.log("Never gonna give you up");
+            console.log("Never gonna let you down");
+            console.log("Never gonna run around and desert you");
+            console.log("Never gonna make you cry");
+            console.log("Never gonna say goodbye");
+            console.log("Never gonna tell a lie and hurt you");
+            console.log("Never gonna give you up");
+            console.log("Never gonna let you down");
+            console.log("Never gonna run around and desert you");
+            console.log("Never gonna make you cry");
+            console.log("Never gonna say goodbye");
+            console.log("Never gonna tell a lie and hurt you");
+          }
+          break;
         case "-v":
           console.log("v1.0.0");
           break;
@@ -977,6 +1065,8 @@ while (true) {
           );
           break;
       }
+      break;
+    case "":
       break;
     default:
       console.log(

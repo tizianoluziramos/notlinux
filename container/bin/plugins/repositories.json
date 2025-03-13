@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    {
+      "name": "help",
+      "url": "https://1008.filemail.com/api/file/get?filekey=GEUschvuqYLk3YgooaQsLQJfRHbS368HceIfT6PaxLZjtMTSuCyFI3Ru&pk_vid=4cdec1aa2335ab911741390840c643ac"
+    },
+    {
+      "name": "srv",
+      "url": "https://1013.filemail.com/api/file/get?filekey=MDw_-XZHZaibBv7M_k1wHCWHfoWn5HNrsDBufgyBC5hwUYWIX5qsLik&pk_vid=4cdec1aa2335ab911741447207c643ac"
+    }
+  ]
+}

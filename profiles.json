@@ -2,6 +2,8 @@
   "bootkey": "pc",
   "enabled": true,
   "rootpassword": "adminjk123",
+  "commander": "[${user}@tryhackme] (${path})>",
+  "pcnamecolor": "#00008B",
   "default": {
     "user": "default",
     "rootAccess": false
