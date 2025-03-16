@@ -1,0 +1,23 @@
+{
+  "name": "brainfuck-node",
+  "version": "1.0.2",
+  "description": "A brainfuck interpreter that actually works.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "keywords": [
+    "brainfuck",
+    "functional",
+    "lightweight"
+  ],
+  "author": "ratismal",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/ratismal/brainfuck-node.git"
+  }
+}

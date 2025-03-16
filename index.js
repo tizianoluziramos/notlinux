@@ -1,15 +1,87 @@
+/*
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/***********************************************************************************************
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : The Linux Project                                            *
+ *                                                                                             *
+ *                     $Archive:: /Sun/_WSProto.h                                             $*
+ *                                                                                             *
+ *                      $Author:: Joe_b                                                       $*
+ *                                                                                             *
+ *                     $Modtime:: 8/06/97 12:39p                                              $*
+ *                                                                                             *
+ *                    $Revision:: 3                                                           $*
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 console.clear();
 const rls = require("./node_boludes/readline-sync/index.cjs");
 const colorfull = require("./node_boludes/chalk/index.js");
 const fs = require("fs");
 const path = require("path");
-
-let currentDir = path.join(__dirname, "container"); // Raíz de la carpeta "container"
 let computerPassword = fs.readFileSync("./profiles.json", "utf-8");
+let repositories = fs.readFileSync("./plugins/repositories.json", "utf-8");
+repositories = JSON.parse(repositories);
 computerPassword = JSON.parse(computerPassword);
 let currentUser = computerPassword.default.user;
 let rootPassword = computerPassword.rootpassword;
 let attemps = 0;
+const { execSync } = require("child_process");
+let userHomeDir = path.join(__dirname, "container", "home", currentUser);
+const clothconfigapi = require("./container/var/software/distribution/package/clothconfigapi.cjs");
+console.log(
+  colorfull.color.blue(
+    `
+  █     █░▓█████  ██▓     ▄████▄   ▒█████   ███▄ ▄███▓▓█████     ▄▄▄▄    ▄▄▄       ▄████▄   ██ ▄█▀
+ ▓█░ █ ░█░▓█   ▀ ▓██▒    ▒██▀ ▀█  ▒██▒  ██▒▓██▒▀█▀ ██▒▓█   ▀    ▓█████▄ ▒████▄    ▒██▀ ▀█   ██▄█▒ 
+ ▒█░ █ ░█ ▒███   ▒██░    ▒▓█    ▄ ▒██░  ██▒▓██    ▓██░▒███      ▒██▒ ▄██▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ 
+ ░█░ █ ░█ ▒▓█  ▄ ▒██░    ▒▓▓▄ ▄██▒▒██   ██░▒██    ▒██ ▒▓█  ▄    ▒██░█▀  ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓██ █▄ 
+ ░░██▒██▓ ░▒████▒░██████▒▒ ▓███▀ ░░ ████▓▒░▒██▒   ░██▒░▒████▒   ░▓█  ▀█▓ ▓█   ▓██▒▒ ▓███▀ ░▒██▒ █▄
+ ░ ▓░▒ ▒  ░░ ▒░ ░░ ▒░▓  ░░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ░  ░░░ ▒░ ░   ░▒▓███▀▒ ▒▒   ▓▒█░░ ░▒ ▒  ░▒ ▒▒ ▓▒
+   ▒ ░ ░   ░ ░  ░░ ░ ▒  ░  ░  ▒     ░ ▒ ▒░ ░  ░      ░ ░ ░  ░   ▒░▒   ░   ▒   ▒▒ ░  ░  ▒   ░ ░▒ ▒░
+   ░   ░     ░     ░ ░   ░        ░ ░ ░ ▒  ░      ░      ░       ░    ░   ░   ▒   ░        ░ ░░ ░ 
+     ░       ░  ░    ░  ░░ ░          ░ ░         ░      ░  ░    ░            ░  ░░ ░      ░  ░   
+                         ░                                            ░           ░               
+ `
+  )
+);
+
+console.log(
+  colorfull.color.red(`
+  ████████╗██████╗ ██╗   ██╗    ██╗  ██╗ █████╗  ██████╗██╗  ██╗    ███╗   ███╗███████╗
+╚══██╔══╝██╔══██╗╚██╗ ██╔╝    ██║  ██║██╔══██╗██╔════╝██║ ██╔╝    ████╗ ████║██╔════╝
+   ██║   ██████╔╝ ╚████╔╝     ███████║███████║██║     █████╔╝     ██╔████╔██║█████╗  
+   ██║   ██╔══██╗  ╚██╔╝      ██╔══██║██╔══██║██║     ██╔═██╗     ██║╚██╔╝██║██╔══╝  
+   ██║   ██║  ██║   ██║       ██║  ██║██║  ██║╚██████╗██║  ██╗    ██║ ╚═╝ ██║███████╗
+   ╚═╝   ╚═╝  ╚═╝   ╚═╝       ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝    ╚═╝     ╚═╝╚══════╝
+`)
+);
+
+if (!fs.existsSync(userHomeDir)) {
+  fs.mkdirSync(userHomeDir, { recursive: true });
+}
+let currentDir = fs.existsSync(userHomeDir)
+  ? userHomeDir
+  : path.join(__dirname, "container");
 
 function getRelativePath(fullPath) {
   // Busca la primera aparición de "container" en la ruta
@@ -17,7 +89,7 @@ function getRelativePath(fullPath) {
 
   // Si "container" está en la ruta, la reemplaza por "/turuta"
   if (index !== -1) {
-    return fullPath.substring(index).replace("container", '\\');
+    return fullPath.substring(index).replace("container", "\\");
   }
 
   // Si no encuentra "container", devuelve la ruta original
@@ -31,39 +103,45 @@ function getPromptFormat(user, path) {
   return commanderFormat
     .replace("${user}", colorfull.color.red(user))
     .replace("${path}", colorfull.color.hex("#00FFFF", relativePath))
-    .replace("tryhackme", colorfull.color.hex(computerPassword.pcnamecolor, "tryhackme"));
+    .replace(
+      "tryhackme",
+      colorfull.color.hex(computerPassword.pcnamecolor, "tryhackme")
+    );
 }
 
 function showOSLogo() {
-  console.log(colorfull.color.blue("                  /#\\"));
-  console.log(colorfull.color.blue("                 /###\\"));
-  console.log(colorfull.color.blue("                /#####\\"));
-  console.log(colorfull.color.blue("               /#######\\"));
-  console.log(colorfull.color.blue('              _ "=######\\'));
-  console.log(colorfull.color.blue("             /##=,_\\#####\\"));
-  console.log(colorfull.color.blue("            /#############\\"));
-  console.log(colorfull.color.blue("           /###############\\"));
-  console.log(colorfull.color.blue("          /#################\\"));
-  console.log(colorfull.color.blue("         /###################\\"));
-  console.log(colorfull.color.blue('        /########*"""*########\\'));
-  console.log(colorfull.color.blue("       /#######/       \\#######\\"));
-  console.log(colorfull.color.blue("      /########         ########\\"));
-  console.log(colorfull.color.blue("     /#########         ######m=,_"));
-  console.log(colorfull.color.blue("    /##########         ##########\\"));
-  console.log(colorfull.color.blue("   /######***             ***######\\"));
-  console.log(colorfull.color.blue("  /###**                       **###\\"));
   console.log(
-    colorfull.color.blue(" /**                               **\\\\")
+    colorfull.color.blue(`
+                     ▄
+                    ▟█▙
+                   ▟███▙
+                  ▟█████▙
+                 ▟███████▙
+                ▂▔▀▜██████▙
+               ▟██▅▂▝▜█████▙
+              ▟█████████████▙
+             ▟███████████████▙
+            ▟█████████████████▙
+           ▟███████████████████▙
+          ▟█████████▛▀▀▜████████▙
+         ▟████████▛      ▜███████▙
+        ▟█████████        ████████▙
+       ▟██████████        █████▆▅▄▃▂
+      ▟██████████▛        ▜█████████▙
+     ▟██████▀▀▀              ▀▀██████▙
+    ▟███▀▘                       ▝▀███▙
+   ▟▛▀                               ▀▜▙
+`)
   );
 }
 
 function askForPassword() {
   if (attemps === 5) {
-    console.log("Maximum number of attemps tried.");
+    console.log(colorfull.color.blue(`Maximum number of attemps tried.`));
     process.exit(0);
   }
   let requestComputerPassword = rls.question.question(
-    `Please insert computer password: `
+    colorfull.color.blue(`Please insert computer password: `)
   );
 
   if (requestComputerPassword !== computerPassword.bootkey) {
@@ -75,6 +153,17 @@ function askForPassword() {
 
 if (computerPassword.enabled === true) {
   askForPassword();
+}
+function runadbcommands(comando, parametros) {
+  try {
+    const runadbcommandsresult = execSync(
+      `container\\dev\\adb.exe ${comando} ${parametros.join(" ")}`,
+      {
+        encoding: "utf-8"
+      }
+    );
+    console.log(runadbcommandsresult);
+  } catch (error) {}
 }
 
 console.clear();
@@ -95,6 +184,169 @@ while (true) {
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
+    case "ip":
+    case "ipconfig":
+      try {
+        const ipconfig = execSync("ipconfig", { encoding: "utf-8" }).trim();
+        console.log(ipconfig);
+      } catch (error) {
+        console.log(error.message);
+      }
+      break;
+    case "weather":
+      function getWeather(latitude, longitude) {
+        // URL de la API de Open-Meteo para obtener el clima
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`;
+
+        try {
+          // Hacer una solicitud a la API de Open-Meteo usando execSync
+          const response = execSync(`curl -s "${url}"`);
+
+          // Convertir la respuesta JSON en un objeto de JavaScript
+          const data = JSON.parse(response.toString());
+
+          if (data && data.current) {
+            // Extraer la información del clima actual
+            const temperature = data.current.temperature_2m;
+            const windSpeed = data.current.wind_speed_10m;
+            const time = data.current.time;
+
+            console.log(`Clima actual (${time}):`);
+            console.log(`Temperatura: ${temperature}°C`);
+            console.log(`Velocidad del viento: ${windSpeed} m/s`);
+          } else {
+            console.log("No se pudo obtener el clima actual.");
+          }
+
+          if (data && data.hourly) {
+            // Mostrar una pequeña muestra de la temperatura y humedad para las próximas horas
+            console.log(`Pronóstico para las próximas horas:`);
+            for (let i = 0; i < 5; i++) {
+              // Muestra las 5 primeras horas
+              const time = data.hourly.time[i];
+              const temp = data.hourly.temperature_2m[i];
+              const humidity = data.hourly.relative_humidity_2m[i];
+              console.log(`${time}: ${temp}°C, Humedad: ${humidity}%`);
+            }
+          }
+        } catch (error) {
+          console.log("Error al obtener el clima:", error);
+        }
+      }
+
+      function getLocationAndWeather() {
+        try {
+          // Hacer una consulta a la API de ipinfo.io para obtener la ubicación basada en la IP
+          const response = execSync("curl -s https://ipinfo.io/json");
+
+          // Convertir la respuesta JSON a un objeto de JavaScript
+          const data = JSON.parse(response.toString());
+
+          // Obtener las coordenadas (latitud, longitud)
+          const [latitude, longitude] = data.loc.split(",");
+
+          console.log(`Ubicación detectada automáticamente:`);
+          console.log(`Latitud: ${latitude}`);
+          console.log(`Longitud: ${longitude}`);
+
+          // Llamar a la función de clima con las coordenadas obtenidas
+          getWeather(latitude, longitude);
+        } catch (error) {
+          console.log("Error al obtener la ubicación:", error);
+        }
+      }
+
+      // Ejecutar la función para obtener la ubicación y el clima
+      getLocationAndWeather();
+      break;
+    case "donut":
+      let A = 0,
+        B = 0,
+        M = Math;
+      const a = () => {
+        let s = [],
+          t = [];
+        (A += 0.05), (B += 0.07);
+        const o = M.cos(A),
+          e = M.sin(A),
+          n = M.cos(B),
+          c = M.sin(B);
+        for (let o = 0; o < 1760; o++)
+          (s[o] = o % 80 == 79 ? "\n" : " "), (t[o] = 0);
+        for (let i = 0; i < 6.28; i += 0.07) {
+          const r = M.cos(i),
+            a = M.sin(i);
+          for (let i = 0; i < 6.28; i += 0.02) {
+            const l = M.sin(i),
+              f = M.cos(i),
+              A = r + 2,
+              B = 1 / (l * A * e + a * o + 5),
+              d = l * A * o - a * e,
+              m = (40 + 30 * B * (f * A * n - d * c)) | 0,
+              v = (12 + 15 * B * (f * A * c + d * n)) | 0,
+              I = m + 80 * v,
+              h =
+                (8 *
+                  ((a * e - l * r * o) * n - l * r * e - a * o - f * r * c)) |
+                0;
+            v < 22 &&
+              v >= 0 &&
+              m >= 0 &&
+              m < 79 &&
+              B > t[I] &&
+              ((t[I] = B), (s[I] = ".,-~:;=!*#$@"[h > 0 ? h : 0]));
+          }
+        }
+        process.stdout.write(`\x1b[J\x1b[H` + s.join(""));
+      };
+      let lastTime = Date.now();
+      const delay = 50; // Delay en milisegundos (por ejemplo, 1 segundo)
+
+      while (true) {
+        let currentTime = Date.now();
+        if (currentTime - lastTime >= delay) {
+          a(); // Ejecuta la función
+          lastTime = currentTime; // Actualiza el tiempo
+        }
+      }
+      break;
+    case "clothconfigapi":
+      console.log(clothconfigapi);
+      break;
+    case "fibonacci":
+      let fibo = args.trim();
+      if (!fibo) {
+        break;
+      }
+      function fibonacci(n) {
+        if (n <= 0) return ""; // Si n es 0 o menor, devuelve una cadena vacía
+        if (n === 1) return "0"; // Si n es 1, devuelve solo "0"
+
+        let result = [0, 1]; // Inicializamos el arreglo con los dos primeros números
+
+        for (let i = 2; i < n; i++) {
+          let next = result[i - 1] + result[i - 2];
+          result.push(next);
+        }
+
+        return result.join(", "); // Unimos los números con comas y los devolvemos como una cadena
+      }
+
+      // Ejemplo de uso
+      let fibonacciString = fibonacci(fibo); // Devuelve los primeros 100 números de Fibonacci como una cadena
+      console.log(fibonacciString);
+      break;
+    case "eval":
+      if (!args) {
+        console.log("Usage: eval command1 command2 etc.");
+      } else if (args) {
+        try {
+          eval(args);
+        } catch (error) {
+          console.log("Invalid error has been occured.");
+        }
+      }
+      break;
     case "oslogo":
       showOSLogo();
       break;
@@ -479,7 +731,6 @@ while (true) {
       let newDirPaths = path.join(currentDir, newDir);
 
       if (!newDirPaths.startsWith(path.join(__dirname, "container"))) {
-        console.log("You cannot navigate outside the 'container' directory.");
       } else {
         try {
           const stats = fs.statSync(newDirPaths);
@@ -574,8 +825,32 @@ while (true) {
     // Agregar dentro del switch para nano
     case "sudo":
       const subCommand = args.split(" ")[0]; // Obtener el primer subcomando (después de sudo)
+      const subcommander = args.split(" ")[1];
 
       switch (subCommand) {
+        case "adb":
+          if (currentUser === "default") {
+            console.log("Use another account or root, access denied.");
+          } else if (currentUser === "root") {
+            // We need to know why each
+            // Fuck Nintendo, they declined the NTCAR
+            // (Nintendo Tetris Copyright Access Request)
+            if (subcommander) {
+              let command = args.split(" ")[1]; // Cloudflare reference.
+              let parameter = args.split(" ").slice(2);
+
+              // Yeah, adb shell, why not?
+              runadbcommands(command, parameter);
+            } else {
+              console.log("Usage: adb <command> <parameters>");
+            }
+            break;
+          } else {
+            // Sorry, shitty UAC is still enabled :)
+            // I need an answer for each people who got fired.
+            // Edit: Everyone got fucked up becouse Electronic Arts disable copyright system.
+            console.log("Use another account or root, access denied.");
+          }
         case "rm":
           let rmmeme = args.split(" ").map(arg => arg.trim());
           if (
@@ -996,6 +1271,26 @@ while (true) {
           console.log(
             colorfull.color.blue("Current running at version v1.0.0")
           );
+          break;
+        case "download":
+          const [invalid, filetodownload] = args.split(" ");
+
+          try {
+            const plugin = repositories.plugins.find(
+              p => p.name === filetodownload
+            );
+
+            if (!plugin) {
+              console.log(`El plugin "${filetodownload}" no fue encontrado.`);
+            } else {
+              execSync(
+                `wget -P ./plugins/ -O ./plugins/${plugin.name}.cjs "${plugin.url}"`
+              );
+              console.log(`Descargado: ${plugin.name}.cjs`);
+            }
+          } catch (error) {
+            console.log(error);
+          }
           break;
         case "run":
           if (subparam === undefined) {

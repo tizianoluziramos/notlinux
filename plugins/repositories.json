@@ -2,11 +2,11 @@
   "plugins": [
     {
       "name": "help",
-      "url": "https://1008.filemail.com/api/file/get?filekey=GEUschvuqYLk3YgooaQsLQJfRHbS368HceIfT6PaxLZjtMTSuCyFI3Ru&pk_vid=4cdec1aa2335ab911741390840c643ac"
+      "url": "https://cdn.discordapp.com/attachments/1348652173428527106/1350588371038109716/help.cjs?ex=67d748f0&is=67d5f770&hm=c34d580c0e592304f9cc4204c9d220a87a59ff96bbb6af6e668b88fa40d500ec&"
     },
     {
-      "name": "srv",
-      "url": "https://1013.filemail.com/api/file/get?filekey=MDw_-XZHZaibBv7M_k1wHCWHfoWn5HNrsDBufgyBC5hwUYWIX5qsLik&pk_vid=4cdec1aa2335ab911741447207c643ac"
+      "name": "tbf",
+      "url": "https://cdn.discordapp.com/attachments/1348652173428527106/1350590519222210611/tbf.cjs?ex=67d74af0&is=67d5f970&hm=9828fdc47efff0f0e7d17c753152cbdec14cdb53a76c8c5607fe13e8217b67fb&"
     }
   ]
 }
