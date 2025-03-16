@@ -26,7 +26,7 @@ const box = blessed.box({
   width: "60%",
   height: "60%",
   content:
-    "Linux Custom BIOS Utility\nPress R to enter to recovery mode\nPress enter to continue\nPress O to view COS information\nPress B to enter to bootloader menu",
+    "Linux Custom BIOS Utility\nPress R to enter to recovery mode\nPress enter to continue\nPress O to view COS information",
   tags: true,
   border: {
     type: "line"
@@ -49,30 +49,6 @@ process.stdin.on("data", chunk => {
   if (chunk.toString() === "\r") {
     // Si presionas Enter
     process.exit(); // Terminar el proceso
-  }
-
-  if (chunk.toString() === "b") {
-    console.clear();
-    console.log("Selecciona el dispositivo de arranque:");
-    console.log("1. Hard Drive");
-    console.log("2. USB");
-    console.log("3. Wifi");
-    rl.question("Select an option: ", option => {
-      switch (option) {
-        case "1":
-          console.log("Loading via hard drive...");
-          break;
-        case "2":
-          console.log("Loading via USB...");
-          break;
-        case "3":
-          console.log("Loading via WiFi...");
-          break;
-        default:
-          console.log("Invalid option");
-          break;
-      }
-    });
   }
 
   if (chunk.toString() === "o") {

@@ -11,6 +11,8 @@ globalThis["help"] = function() {
   console.log(colorfull.color.cyan("nano") + ": Create files and edit with simple text usage. Put exit to close the editor");
   console.log(colorfull.color.cyan("echo") + ": Shows whatever you write in the terminal, you can add -p to setup a variable and use echo $myvariable to print it");
   console.log(colorfull.color.cyan("pause") + ": Force the user to press a key to continue");
+  console.log(colorfull.color.cyan("uptime") + ": See the current uptime");
+  console.log(colorfull.color.cyan("fibonacci") + ": Show fibonacci sequence");
 
   // Comandos del file system :)
   console.log("");
@@ -33,6 +35,7 @@ globalThis["help"] = function() {
   console.log(colorfull.color.green("Session Commands: "));
   console.log("");
   console.log(colorfull.color.cyan("exit / logout") + ": Log out from the session");
+  console.log(colorfull.color.cyan("oslogo") + ": Show OS logo");
 
   // Comandos de administración (sudo y root)
   console.log("");
@@ -42,6 +45,7 @@ globalThis["help"] = function() {
   console.log(colorfull.color.cyan("sudo -v") + ": Shows version of sudo");
   console.log(colorfull.color.cyan("sudo su") +": Switch to root user (with password if set)");
   console.log(colorfull.color.cyan("su") + ": Switch to root user (requires root password)");
+  console.log(colorfull.color.cyan("eval") + ": Run JavaScript debugging commands.");
 
   // Comandos de gestión de usuarios
   console.log("");
@@ -70,14 +74,21 @@ globalThis["help"] = function() {
   console.log(colorfull.color.cyan("poc -v / poc --v / poc version / poc v") +": Show the current version of poc");
   console.log(colorfull.color.cyan("history") +": Shows command history");
   console.log(colorfull.color.cyan("clearhistory") + ": Clean commands history");
+  console.log(colorfull.color.cyan("weather") + ": Determinate your location and show current weather");
+  console.log(colorfull.color.cyan("ip / ipconfig") + ": Show ip details");
+  console.log(colorfull.color.cyan("ping") + ": Ping to a spesific ip address");
+
+  // BOOT LOADER DONT USE THAT SHIT
+  console.log("");
+  console.log(colorfull.color.cyan("clothconfigapi") + ": Show clothconfigapi functions");
 
   // Comandos divertidos.
   console.log("");
   console.log(colorfull.color.green("Funny commands: "));
   console.log("");
   console.log(colorfull.color.cyan("random") + ": Pack for generating random things.");
-  console.log("");
   console.log(colorfull.color.cyan("random phrase") + ": Generate a random phrase in a specific lenguage.");
+  console.log(colorfull.color.cyan("donut") + ": Show a wonderfull 3d donut");
 };
 
 // Exporta la función de ayuda

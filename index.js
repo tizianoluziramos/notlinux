@@ -16,22 +16,24 @@
 */
 
 /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
+ ***                  F A KE T E R M I N A L - F a k e L i nux S t u d i o s                 ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : The Linux Project                                            *
  *                                                                                             *
  *                     $Archive:: /Sun/_WSProto.h                                             $*
  *                                                                                             *
- *                      $Author:: Joe_b                                                       $*
+ *                      $Author:: Me                                                          $*
  *                                                                                             *
- *                     $Modtime:: 8/06/97 12:39p                                              $*
+ *                     $Modtime:: 8/06/24 5:31p                                              $*
  *                                                                                             *
  *                    $Revision:: 3                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+let startTime = Date.now(); // Registra el momento de inicio del sistema
 
 console.clear();
 const rls = require("./node_boludes/readline-sync/index.cjs");
@@ -67,7 +69,7 @@ console.log(
 
 console.log(
   colorfull.color.red(`
-  ████████╗██████╗ ██╗   ██╗    ██╗  ██╗ █████╗  ██████╗██╗  ██╗    ███╗   ███╗███████╗
+████████╗██████╗ ██╗   ██╗    ██╗  ██╗ █████╗  ██████╗██╗  ██╗    ███╗   ███╗███████╗
 ╚══██╔══╝██╔══██╗╚██╗ ██╔╝    ██║  ██║██╔══██╗██╔════╝██║ ██╔╝    ████╗ ████║██╔════╝
    ██║   ██████╔╝ ╚████╔╝     ███████║███████║██║     █████╔╝     ██╔████╔██║█████╗  
    ██║   ██╔══██╗  ╚██╔╝      ██╔══██║██╔══██║██║     ██╔═██╗     ██║╚██╔╝██║██╔══╝  
@@ -184,10 +186,58 @@ while (true) {
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
+    case "uptime":
+      function uptime() {
+        let elapsedTime = Date.now() - startTime; // Tiempo transcurrido en milisegundos
+
+        let hours = Math.floor(elapsedTime / 3600000); // Convierte milisegundos a horas
+        let minutes = Math.floor(elapsedTime % 3600000 / 60000); // Convierte milisegundos a minutos
+        let seconds = Math.floor(elapsedTime % 60000 / 1000); // Convierte milisegundos a segundos
+
+        switch (true) {
+          case hours > 0:
+            console.log(
+              `Uptime: ${hours} hours, ${minutes} minutes and ${seconds} seconds.`
+            );
+            break;
+          case minutes > 0:
+            console.log(
+              `Uptime: ${minutes} minutes and ${seconds} seconds.`
+            );
+            break;
+          case seconds > 0:
+            console.log(`Uptime: ${seconds} seconds.`);
+            break;
+          default:
+            console.log("There is no uptime.");
+        }
+      }
+
+      // Llamada periódica a la función para verificar el tiempo transcurrido (puedes invocar esto en cualquier parte)
+      function checkUptime() {
+        uptime(); // Verifica el tiempo de actividad
+      }
+      checkUptime();
+      break;
+    case "ping":
+      if (!args[0]) {
+        console.log("Usage: ping <ip address>");
+        break;
+      } else {
+        try {
+          const ipconfig = execSync(`ping ${args}`, {
+            encoding: "utf8"
+          }).trim();
+          console.log(ipconfig);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      break;
     case "ip":
     case "ipconfig":
       try {
-        const ipconfig = execSync("ipconfig", { encoding: "utf-8" }).trim();
+        const ipconfig = execSync("ipconfig", { encoding: "utf8" }).trim();
         console.log(ipconfig);
       } catch (error) {
         console.log(error.message);
@@ -195,68 +245,66 @@ while (true) {
       break;
     case "weather":
       function getWeather(latitude, longitude) {
-        // URL de la API de Open-Meteo para obtener el clima
+        // Open-Meteo API URL to get the weather
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`;
 
         try {
-          // Hacer una solicitud a la API de Open-Meteo usando execSync
           const response = execSync(`curl -s "${url}"`);
 
-          // Convertir la respuesta JSON en un objeto de JavaScript
           const data = JSON.parse(response.toString());
 
           if (data && data.current) {
-            // Extraer la información del clima actual
+            // Extract current weather information
             const temperature = data.current.temperature_2m;
             const windSpeed = data.current.wind_speed_10m;
             const time = data.current.time;
 
-            console.log(`Clima actual (${time}):`);
-            console.log(`Temperatura: ${temperature}°C`);
-            console.log(`Velocidad del viento: ${windSpeed} m/s`);
+            console.log(`Current weather (${time}):`);
+            console.log(`Temperature: ${temperature}°C`);
+            console.log(`Wind speed: ${windSpeed} m/s`);
           } else {
-            console.log("No se pudo obtener el clima actual.");
+            console.log("Could not retrieve current weather.");
           }
 
           if (data && data.hourly) {
-            // Mostrar una pequeña muestra de la temperatura y humedad para las próximas horas
-            console.log(`Pronóstico para las próximas horas:`);
+            // Display a small preview of temperature and humidity for the next few hours
+            console.log(`Forecast for the next hours:`);
             for (let i = 0; i < 5; i++) {
-              // Muestra las 5 primeras horas
+              // Show the first 5 hours
               const time = data.hourly.time[i];
               const temp = data.hourly.temperature_2m[i];
               const humidity = data.hourly.relative_humidity_2m[i];
-              console.log(`${time}: ${temp}°C, Humedad: ${humidity}%`);
+              console.log(`${time}: ${temp}°C, Humidity: ${humidity}%`);
             }
           }
         } catch (error) {
-          console.log("Error al obtener el clima:", error);
+          console.log("Error fetching weather data:", error);
         }
       }
 
       function getLocationAndWeather() {
         try {
-          // Hacer una consulta a la API de ipinfo.io para obtener la ubicación basada en la IP
+          // Query the ipinfo.io API to get location based on IP
           const response = execSync("curl -s https://ipinfo.io/json");
 
-          // Convertir la respuesta JSON a un objeto de JavaScript
+          // Convert JSON response to a JavaScript object
           const data = JSON.parse(response.toString());
 
-          // Obtener las coordenadas (latitud, longitud)
+          // Get coordinates (latitude, longitude)
           const [latitude, longitude] = data.loc.split(",");
 
-          console.log(`Ubicación detectada automáticamente:`);
-          console.log(`Latitud: ${latitude}`);
-          console.log(`Longitud: ${longitude}`);
+          console.log(`Automatically detected location:`);
+          console.log(`Latitude: ${latitude}`);
+          console.log(`Longitude: ${longitude}`);
 
-          // Llamar a la función de clima con las coordenadas obtenidas
+          // Call the weather function with the obtained coordinates
           getWeather(latitude, longitude);
         } catch (error) {
-          console.log("Error al obtener la ubicación:", error);
+          console.log("Error retrieving location:", error);
         }
       }
 
-      // Ejecutar la función para obtener la ubicación y el clima
+      // Run the function to get location and weather
       getLocationAndWeather();
       break;
     case "donut":
@@ -988,7 +1036,16 @@ while (true) {
         currentUser = computerPassword.default.user;
         console.log(colorfull.color.green("You have exited root mode."));
       } else {
-        console.log("Closing everything....");
+        console.log(
+          colorfull.color.red(`
+          ░██████╗░░█████╗░░█████╗░██████╗░██████╗░██╗░░░██╗███████╗
+          ██╔════╝░██╔══██╗██╔══██╗██╔══██╗██╔══██╗╚██╗░██╔╝██╔════╝
+          ██║░░██╗░██║░░██║██║░░██║██║░░██║██████╦╝░╚████╔╝░█████╗░░
+          ██║░░╚██╗██║░░██║██║░░██║██║░░██║██╔══██╗░░╚██╔╝░░██╔══╝░░
+          ╚██████╔╝╚█████╔╝╚█████╔╝██████╔╝██████╦╝░░░██║░░░███████╗
+          ░╚═════╝░░╚════╝░░╚════╝░╚═════╝░╚═════╝░░░░╚═╝░░░╚══════╝
+          `)
+        );
         process.exit(0);
       }
       break;
