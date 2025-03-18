@@ -1,5 +1,5 @@
 /*
-**	Copyright 2025 Electronic Arts Inc.
+**	Copyright 2025 Just You And Me.
 **
 **	This program is free software: you can redistribute it and/or modify
 **	it under the terms of the GNU General Public License as published by
@@ -33,9 +33,10 @@
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-let startTime = Date.now(); // Registra el momento de inicio del sistema
+let startTime = Date.now();
 
 console.clear();
+const qrcode = require("qrcode-terminal");
 const rls = require("./node_boludes/readline-sync/index.cjs");
 const colorfull = require("./node_boludes/chalk/index.js");
 const fs = require("fs");
@@ -91,7 +92,10 @@ function getRelativePath(fullPath) {
 
   // Si "container" está en la ruta, la reemplaza por "/turuta"
   if (index !== -1) {
-    return fullPath.substring(index).replace("container", "\\");
+    if (fullPath.substring(index).replace("container", "") === "") {
+      return fullPath.substring(index).replace("container", "\\");
+    }
+    return fullPath.substring(index).replace("container", "");
   }
 
   // Si no encuentra "container", devuelve la ruta original
@@ -186,6 +190,19 @@ while (true) {
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
+    case "qr":
+      function generateQR(text) {
+        qrcode.generate(text, { small: true }, function(qr) {
+          console.log(qr);
+        });
+      }
+
+      const input = args;
+      generateQR(input);
+      break;
+    case "pwd":
+      console.log(getRelativePath(currentDir));
+      break;
     case "uptime":
       function uptime() {
         let elapsedTime = Date.now() - startTime; // Tiempo transcurrido en milisegundos
@@ -201,9 +218,7 @@ while (true) {
             );
             break;
           case minutes > 0:
-            console.log(
-              `Uptime: ${minutes} minutes and ${seconds} seconds.`
-            );
+            console.log(`Uptime: ${minutes} minutes and ${seconds} seconds.`);
             break;
           case seconds > 0:
             console.log(`Uptime: ${seconds} seconds.`);
@@ -775,10 +790,17 @@ while (true) {
       if (!newDir) {
         newDir = rls.question.question("Enter directory to navigate to: ");
       }
-
+      if (
+        newDir === "boot" &&
+        currentDir === path.join(__dirname, "container")
+      ) {
+        console.log("Access denied.");
+        break;
+      }
       let newDirPaths = path.join(currentDir, newDir);
 
-      if (!newDirPaths.startsWith(path.join(__dirname, "container"))) {
+      // Verificar si se está intentando salir del directorio 'container'
+      if (currentDir === path.join(__dirname, "container") && newDir === "..") {
       } else {
         try {
           const stats = fs.statSync(newDirPaths);
