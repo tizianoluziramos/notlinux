@@ -14,12 +14,15 @@ This project is a file system and terminal-like command simulator built with Jav
 
 ## Requirements
 
+- Now we are only supporting Windows 10 and higher
+- Python installed
 - Node.js v16 or higher.
 - Dependencies:
   - `readline-sync`
   - `chalk`
   - `fs`
   - `path`
+- AutoHotKey **`V1 PLUGIN REQUIRED`**: 
 
 ## Installation
 
@@ -51,17 +54,53 @@ node index.js
 
 ### Available Commands
 
-- **`mkdir <name>`**: Creates a directory with the specified name.
-- **`rmdir <name>`**: Deletes a directory.
-- **`cd <path>`**: Changes the current directory to the specified path.
-- **`ls`**: Lists files and directories in the current directory.
-- **`cat <file>`**: Displays the contents of a file.
-- **`sudo <command>`**: Executes a command with root privileges, if the user has access.
-- **`nuser <name>`**: Creates a new user.
-- **`ruser <name>`**: Deletes a user.
-- **`net`**: Displays the connected users.
-- **`cuser <name>`**: Changes a user's password.
-- **`poc`**: Displays the permissions of users.
+- **`clear / cls`**: Clears the terminal 
+- **`time / date`**: Show current date
+- **`nano <name>`**: Modify file source
+- **`echo <args>`**: Show in the console the following args.
+- **`pause`**: Force the user to press a key to continue
+- **`uptime`**: See the current uptime
+- **`fibonacci`**: Show fibonacci sequence
+- **`qr <args>`**: Generate a qr code from text
+- **`find <file>`**: Use it for find a file
+- **`copy / cb <args>`**: Copy a file to another path
+- **`rename <file1> <file2>`**: Rename a file
+- **`move / mv <d/f> <d/f>`**: Move something to another folder
+- **`dir / ls`**: Show all files from current dir
+- **`rm / del <file>`**: Remove a file
+- **`rmdir <folder>`**: Remove a folder
+- **`cd <path>`**: Change your current dir
+- **`mkdir <folder>`**: Make a folder
+- **`type / cat <file>`**: Show text of a file in the console
+- **`touch <file>`**: Create an empty file
+- **`exit / logout`**: Log out from the session
+- **`oslogo`**: Show os logo
+- **`sudo`**: Provides help for sudo
+- **`sudo -v`**: Show the sudo version
+- **`sudo su`**: Switch to root user (with password if set)
+- **`su`**: Run root request command, but it shows access denied, run it with sudo :)
+- **`eval <args>`**: Run JavaScript debugging commands
+- **`passwd`**: Change users password
+- **`net`**: Show net subcommand
+- **`net user`**: Show current users
+- **`net user add`**: Add a new user  
+- **`net user remove / delete`**: Remove a user (root access required)          
+- **`net user change`**: Change the current user
+- **`whois <user>`**: See properties of users, root access required
+- **`poc`**: Show the POC info
+- **`poc install <program>`**: Install a program you want :)
+- **`poc remove / uninstall <program>`**: Uninstall the specific program     
+- **`poc run <program>`**: Run the specified program if installed
+- **`poc -v`**: Show the POC version
+- **`weather`**: Determinate your location and show current weather
+- **`ip / ipconfig`**: Show ip details
+- **`ping <ip> <args>`**: Ping to specific ip address
+- **`random`**: Pack for generating random things
+- **`random phrase <lenguage>`**: Generate a random phrase in a specific lenguage
+- **`donut`**: Show a wonderfull donut in 3D   
+
+### KERNEL LEVEL COMMANDS, WARNING!!!
+- **`clothconfigapi`**: Show clothconfigapi functions   
 
 ### Example Usage
 

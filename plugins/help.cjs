@@ -13,6 +13,7 @@ globalThis["help"] = function() {
   console.log(colorfull.color.cyan("pause") + ": Force the user to press a key to continue");
   console.log(colorfull.color.cyan("uptime") + ": See the current uptime");
   console.log(colorfull.color.cyan("fibonacci") + ": Show fibonacci sequence");
+  console.log(colorfull.color.cyan("qr") + ": Generate a qr code from a text");
 
   // Comandos del file system :)
   console.log("");
@@ -72,8 +73,6 @@ globalThis["help"] = function() {
   console.log(colorfull.color.green("Version and information: "));
   console.log("");
   console.log(colorfull.color.cyan("poc -v / poc --v / poc version / poc v") +": Show the current version of poc");
-  console.log(colorfull.color.cyan("history") +": Shows command history");
-  console.log(colorfull.color.cyan("clearhistory") + ": Clean commands history");
   console.log(colorfull.color.cyan("weather") + ": Determinate your location and show current weather");
   console.log(colorfull.color.cyan("ip / ipconfig") + ": Show ip details");
   console.log(colorfull.color.cyan("ping") + ": Ping to a spesific ip address");
