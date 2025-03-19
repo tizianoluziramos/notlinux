@@ -98,7 +98,8 @@ node index.js
 - **`random`**: Pack for generating random things
 - **`random phrase <lenguage>`**: Generate a random phrase in a specific lenguage
 - **`donut`**: Show a wonderfull donut in 3D   
-
+- **`whoami`**: Show current user
+- **`sudo adb`**: Run adb commands. 
 ### KERNEL LEVEL COMMANDS, WARNING!!!
 - **`clothconfigapi`**: Show clothconfigapi functions   
 

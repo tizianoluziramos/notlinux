@@ -1006,14 +1006,14 @@ while (true) {
           } else {
             let suPassword = rls.question.question("Insert root password: ");
             if (suPassword === rootPassword) {
-              currentUser = "root";
+              currentUser = 'root'
               console.log(colorfull.color.red("You are now on root!"));
+              
             } else {
               console.log("Wrong root password.");
             }
           }
           break;
-
         default:
           console.log("Running on sudo v1.0.0");
           break;
