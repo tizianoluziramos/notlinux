@@ -4,9 +4,16 @@
   "rootpassword": "adminjk123",
   "commander": "${user}@tryhackme (${path}) $ ",
   "pcnamecolor": "#00008B",
+  "bootloader": {
+    "version": "Unstable-Kernel alpha V0.1",
+    "devMode": false,
+    "kernel": {
+      "lenguage": "0x0001",
+      "allowCallbackRequest_write": true
+    }
+  },
   "default": {
     "user": "default",
     "rootAccess": false
-  },
-  "users": {}
+  }
 }

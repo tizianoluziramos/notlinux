@@ -1,6 +1,6 @@
-// Definir las funciones globalmente en el objeto globalThis
 const colorfull = require("../node_boludes/chalk/index.js");
-
+// Escuchen boluditos me niego a usar Prettier, le quita la legibilidad al codigo
+// prettier-ignore
 globalThis["help"] = function() {
   console.log(colorfull.color.green("Available commands:"));
   console.log("");
@@ -14,6 +14,10 @@ globalThis["help"] = function() {
   console.log(colorfull.color.cyan("uptime") + ": See the current uptime");
   console.log(colorfull.color.cyan("fibonacci") + ": Show fibonacci sequence");
   console.log(colorfull.color.cyan("qr") + ": Generate a qr code from a text");
+  console.log(colorfull.color.cyan("exel") + ": Package for Exel reading, writing, etc");
+  console.log(colorfull.color.cyan("exel read") + ": Read an Exel file");
+  console.log(colorfull.color.cyan("translate") + ": Package for translating code to code, etc");
+  console.log(colorfull.color.cyan("translate brainfuck") + "Run BrainFuck code");
 
   // Comandos del file system :)
   console.log("");
@@ -37,6 +41,7 @@ globalThis["help"] = function() {
   console.log("");
   console.log(colorfull.color.cyan("exit / logout") + ": Log out from the session");
   console.log(colorfull.color.cyan("oslogo") + ": Show OS logo");
+  console.log(colorfull.color.cyan("reboot") + ": Reboot the system");
 
   // Comandos de administración (sudo y root)
   console.log("");
@@ -80,6 +85,9 @@ globalThis["help"] = function() {
   // BOOT LOADER DONT USE THAT SHIT
   console.log("");
   console.log(colorfull.color.cyan("clothconfigapi") + ": Show clothconfigapi functions");
+  console.log(colorfull.color.cyan("boot") + ": Display Boot Loader SYSTEM and some config");
+  console.log(colorfull.color.cyan("boot info") + ": Display Boot Loader info");
+  console.log(colorfull.color.cyan("kernel") + ": Show kernel information");
 
   // Comandos divertidos.
   console.log("");
@@ -90,5 +98,4 @@ globalThis["help"] = function() {
   console.log(colorfull.color.cyan("donut") + ": Show a wonderfull 3d donut");
 };
 
-// Exporta la función de ayuda
 module.exports = globalThis["help"];

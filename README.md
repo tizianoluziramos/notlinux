@@ -36,8 +36,8 @@ This project is a file system and terminal-like command simulator built with Jav
 
    ```bash
    cd repository-name
-   ```
 
+   ```
 3. Install the dependencies:
 
    ```bash
@@ -89,7 +89,7 @@ node index.js
 - **`whois <user>`**: See properties of users, root access required
 - **`poc`**: Show the POC info
 - **`poc install <program>`**: Install a program you want :)
-- **`poc remove / uninstall <program>`**: Uninstall the specific program     
+- **`poc remove / uninstall <program>`**: Uninstall the specific program
 - **`poc run <program>`**: Run the specified program if installed
 - **`poc -v`**: Show the POC version
 - **`weather`**: Determinate your location and show current weather
@@ -99,14 +99,24 @@ node index.js
 - **`random phrase <lenguage>`**: Generate a random phrase in a specific lenguage
 - **`donut`**: Show a wonderfull donut in 3D   
 - **`whoami`**: Show current user
-- **`sudo adb`**: Run adb commands. 
+- **`sudo adb`**: Run adb commands
+- **`exel`**: Tools for Exel
+- **`exel read`**: Read an Exel document
+- **`translate`**: Package for translating code, lenguage, etc
+- **`translate brainfuck`**: Run code from BrainFuck
+- **`reboot`**: Reboot the PC.    
+
 ### KERNEL LEVEL COMMANDS, WARNING!!!
 - **`clothconfigapi`**: Show clothconfigapi functions   
+- **`boot`**: Display Boot Loader System Config
+- **`boot info`**: Show Boot Loader Info
+- **`kernel`**: Show kernel information  
 
 ### Example Usage
 
 ```bash
 > mkdir projects
+
 > cd projects
 > nuser john
 > sudo mkdir john_projects

@@ -1,19 +1,20 @@
 /*
-**	Copyright 2025 Just You And Me.
-**
-**	This program is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**
-**	This program is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**
-**	You should have received a copy of the GNU General Public License
-**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ **	Copyright 2025 Just You And Me.
+ **
+ **  Under GNU General Public License :)
+ **	This program is free software: you can redistribute it and/or modify
+ **	it under the terms of the GNU General Public License as published by
+ **	the Free Software Foundation, either version 3 of the License, or
+ **	(at your option) any later version.
+ **
+ **	This program is distributed in the hope that it will be useful,
+ **	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ **	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ **	GNU General Public License for more details.
+ **
+ **	You should have received a copy of the GNU General Public License
+ **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /***********************************************************************************************
  ***                  F A KE T E R M I N A L - F a k e L i nux S t u d i o s                 ***
@@ -21,90 +22,67 @@
  *                                                                                             *
  *                 Project Name : The Linux Project                                            *
  *                                                                                             *
- *                     $Archive:: /Sun/_WSProto.h                                             $*
+ *                     $Archive:: /Sun/_WSProto.h                                              *
  *                                                                                             *
- *                      $Author:: Me                                                          $*
+ *                      $Author:: Me                                                           *
  *                                                                                             *
- *                     $Modtime:: 8/06/24 5:31p                                              $*
+ *                     $Modtime:: 8/06/24 5:31p                                                *
  *                                                                                             *
- *                    $Revision:: 3                                                           $*
+ *                    $Revision:: 3                                                            *
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
- * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 let startTime = Date.now();
-
+/*
+ ** Te amo malvina, ojala lo lea
+ ** Algun dia ..
+ */
 console.clear();
+const { brainFuckCode } = require("./container/dev/translator/brainfuck.js");
+const {
+  getRelativePath
+} = require("./container/dev/commands/getRelativePath.js");
+const { showOSLogo } = require("./container/dev/commands/showOSLogo.js");
+const xlsx = require("xlsx");
 const qrcode = require("qrcode-terminal");
 const rls = require("./node_boludes/readline-sync/index.cjs");
 const colorfull = require("./node_boludes/chalk/index.js");
 const fs = require("fs");
 const path = require("path");
+const rl = require("readline-sync");
 let computerPassword = fs.readFileSync("./profiles.json", "utf-8");
 let repositories = fs.readFileSync("./plugins/repositories.json", "utf-8");
+require("./container/boot/bootKernel.js");
 repositories = JSON.parse(repositories);
 computerPassword = JSON.parse(computerPassword);
 let currentUser = computerPassword.default.user;
 let rootPassword = computerPassword.rootpassword;
-let attemps = 0;
 const { execSync } = require("child_process");
 let userHomeDir = path.join(__dirname, "container", "home", currentUser);
 const clothconfigapi = require("./container/var/software/distribution/package/clothconfigapi.cjs");
-console.log(
-  colorfull.color.blue(
-    `
-  █     █░▓█████  ██▓     ▄████▄   ▒█████   ███▄ ▄███▓▓█████     ▄▄▄▄    ▄▄▄       ▄████▄   ██ ▄█▀
- ▓█░ █ ░█░▓█   ▀ ▓██▒    ▒██▀ ▀█  ▒██▒  ██▒▓██▒▀█▀ ██▒▓█   ▀    ▓█████▄ ▒████▄    ▒██▀ ▀█   ██▄█▒ 
- ▒█░ █ ░█ ▒███   ▒██░    ▒▓█    ▄ ▒██░  ██▒▓██    ▓██░▒███      ▒██▒ ▄██▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ 
- ░█░ █ ░█ ▒▓█  ▄ ▒██░    ▒▓▓▄ ▄██▒▒██   ██░▒██    ▒██ ▒▓█  ▄    ▒██░█▀  ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓██ █▄ 
- ░░██▒██▓ ░▒████▒░██████▒▒ ▓███▀ ░░ ████▓▒░▒██▒   ░██▒░▒████▒   ░▓█  ▀█▓ ▓█   ▓██▒▒ ▓███▀ ░▒██▒ █▄
- ░ ▓░▒ ▒  ░░ ▒░ ░░ ▒░▓  ░░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ░  ░░░ ▒░ ░   ░▒▓███▀▒ ▒▒   ▓▒█░░ ░▒ ▒  ░▒ ▒▒ ▓▒
-   ▒ ░ ░   ░ ░  ░░ ░ ▒  ░  ░  ▒     ░ ▒ ▒░ ░  ░      ░ ░ ░  ░   ▒░▒   ░   ▒   ▒▒ ░  ░  ▒   ░ ░▒ ▒░
-   ░   ░     ░     ░ ░   ░        ░ ░ ░ ▒  ░      ░      ░       ░    ░   ░   ▒   ░        ░ ░░ ░ 
-     ░       ░  ░    ░  ░░ ░          ░ ░         ░      ░  ░    ░            ░  ░░ ░      ░  ░   
-                         ░                                            ░           ░               
- `
-  )
-);
-
-console.log(
-  colorfull.color.red(`
-████████╗██████╗ ██╗   ██╗    ██╗  ██╗ █████╗  ██████╗██╗  ██╗    ███╗   ███╗███████╗
-╚══██╔══╝██╔══██╗╚██╗ ██╔╝    ██║  ██║██╔══██╗██╔════╝██║ ██╔╝    ████╗ ████║██╔════╝
-   ██║   ██████╔╝ ╚████╔╝     ███████║███████║██║     █████╔╝     ██╔████╔██║█████╗  
-   ██║   ██╔══██╗  ╚██╔╝      ██╔══██║██╔══██║██║     ██╔═██╗     ██║╚██╔╝██║██╔══╝  
-   ██║   ██║  ██║   ██║       ██║  ██║██║  ██║╚██████╗██║  ██╗    ██║ ╚═╝ ██║███████╗
-   ╚═╝   ╚═╝  ╚═╝   ╚═╝       ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝    ╚═╝     ╚═╝╚══════╝
-`)
-);
-
+require("./container/dev/commands/bootmessage.js");
 if (!fs.existsSync(userHomeDir)) {
   fs.mkdirSync(userHomeDir, { recursive: true });
 }
+
 let currentDir = fs.existsSync(userHomeDir)
   ? userHomeDir
   : path.join(__dirname, "container");
 
-function getRelativePath(fullPath) {
-  // Busca la primera aparición de "container" en la ruta
-  const index = fullPath.indexOf("container");
+let relativePath = path.relative(path.join(__dirname, "container"), currentDir);
 
-  // Si "container" está en la ruta, la reemplaza por "/turuta"
-  if (index !== -1) {
-    if (fullPath.substring(index).replace("container", "") === "") {
-      return fullPath.substring(index).replace("container", "\\");
-    }
-    return fullPath.substring(index).replace("container", "");
-  }
-
-  // Si no encuentra "container", devuelve la ruta original
-  return fullPath;
-}
+// Si estamos en la raíz de 'container', solo mostrar 'container\'
+let displayPath =
+  relativePath === ""
+    ? "container\\"
+    : `container\\${relativePath.replace(/\\/g, "\\\\")}`;
 
 function getPromptFormat(user, path) {
   let commanderFormat = computerPassword.commander || "${user}:${path} > "; // Formato por defecto
-  let relativePath = getRelativePath(path); // Convierte la ruta absoluta a relativa
+  // Seguro que luego lo toqueteo para hacer que el JSON pueda configurarlo, igual no creo pero estaria bien poder customizarlo.
+  let relativePath = getRelativePath(path);
+  // Convierte la ruta absoluta a relativa
 
   return commanderFormat
     .replace("${user}", colorfull.color.red(user))
@@ -115,81 +93,186 @@ function getPromptFormat(user, path) {
     );
 }
 
-function showOSLogo() {
-  console.log(
-    colorfull.color.blue(`
-                     ▄
-                    ▟█▙
-                   ▟███▙
-                  ▟█████▙
-                 ▟███████▙
-                ▂▔▀▜██████▙
-               ▟██▅▂▝▜█████▙
-              ▟█████████████▙
-             ▟███████████████▙
-            ▟█████████████████▙
-           ▟███████████████████▙
-          ▟█████████▛▀▀▜████████▙
-         ▟████████▛      ▜███████▙
-        ▟█████████        ████████▙
-       ▟██████████        █████▆▅▄▃▂
-      ▟██████████▛        ▜█████████▙
-     ▟██████▀▀▀              ▀▀██████▙
-    ▟███▀▘                       ▝▀███▙
-   ▟▛▀                               ▀▜▙
-`)
-  );
-}
+(function askForPassword(attemps = 0) {
+  if (computerPassword.enabled === true) {
+    if (attemps === 5) {
+      console.log(colorfull.color.blue(`Maximum number of attemps tried.`));
+      process.exit(0);
+    }
+    let requestComputerPassword = rls.question.question(
+      colorfull.color.blue(`Please insert computer password: `)
+    );
 
-function askForPassword() {
-  if (attemps === 5) {
-    console.log(colorfull.color.blue(`Maximum number of attemps tried.`));
-    process.exit(0);
+    if (requestComputerPassword !== computerPassword.bootkey) {
+      console.log("Wrong password, try again.");
+      attemps++;
+      askForPassword(attemps);
+    }
   }
-  let requestComputerPassword = rls.question.question(
-    colorfull.color.blue(`Please insert computer password: `)
-  );
+})();
 
-  if (requestComputerPassword !== computerPassword.bootkey) {
-    console.log("Wrong password, try again.");
-    attemps++;
-    askForPassword(); // Llamado recursivo
-  }
-}
-
-if (computerPassword.enabled === true) {
-  askForPassword();
-}
+// Me pregunto porque habran despedido a toda la compania de CloudFlare...
+/*
+ * Viva Command And Conquer 
+*/
 function runadbcommands(comando, parametros) {
   try {
-    const runadbcommandsresult = execSync(
+    const result = execSync(
       `container\\dev\\adb.exe ${comando} ${parametros.join(" ")}`,
       {
         encoding: "utf-8"
       }
     );
-    console.log(runadbcommandsresult);
-  } catch (error) {}
+    console.log(result);
+  } finally {
+    return;
+  }
+}
+
+function reboot(a = false) {
+  console.log(
+    "Currently in beta state, for any quality content contact to kaminski data storage FML."
+  );
+  if (a) {
+    console.log("Restarting...");
+    process.exit();
+  }
+  console.log("Access denied");
+  localStorage.clear();
+  return;
 }
 
 console.clear();
 showOSLogo();
 
-let relativePath = path.relative(path.join(__dirname, "container"), currentDir);
-
-// Si estamos en la raíz de 'container', solo mostrar 'container\'
-let displayPath =
-  relativePath === ""
-    ? "container\\"
-    : `container\\${relativePath.replace(/\\/g, "\\\\")}`;
+if (computerPassword.bootloader.devMode === true) {
+  void String(
+    process.stdout.write(
+      `${colorfull.color.green(
+        "You are now in developer mode, any command here will be permanently run in root access, dont do some shit \n"
+      )}`,
+      "utf-8"
+    )
+  );
+  while (true) {
+    let command = rls.question.question(
+      getPromptFormat(currentUser, currentDir)
+    );
+    let inputParts = command.trim().split(" ");
+    mainCommand = inputParts[0];
+    switch (mainCommand) {
+      case "clear":
+      case "cls":
+        console.clear();
+        break;
+      case "kernel":
+        if (
+          Boolean(
+            computerPassword.bootloader.kernel.allowCallbackRequest_write
+          ) === true
+        ) {
+          process.stdout.write(`Kernel Info: \n`, "utf-8");
+          process.stdout.write(
+            `${computerPassword.bootloader.kernel.lenguage}\n`,
+            "utf-8"
+          );
+        } else {
+          process.stdout.write(
+            "Kernel Info is disabled on Developer Mode Config \n",
+            "utf-8"
+          );
+          break;
+        }
+        break;
+      case "":
+        break;
+      default:
+        console.log(
+          `Command ${command} is not recognized as an internal or external command,program, or executable batch file.`
+        );
+        break;
+    }
+  }
+}
 
 while (true) {
   let command = rls.question.question(getPromptFormat(currentUser, currentDir));
-
   let inputParts = command.trim().split(" ");
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
+    case "translate":
+      switch (inputParts[1]) {
+        case "brainfuck":
+          console.log(brainFuckCode(inputParts[2]));
+          break;
+        default:
+          break;
+      }
+      break;
+    case "boot":
+      switch (inputParts[1]) {
+        case "info":
+          break;
+        default:
+          console.log(`Boot Loader V${computerPassword.bootloader.version}`);
+          break;
+      }
+      break;
+    case "reboot":
+      if (currentUser === "default") {
+        break;
+      }
+      if (
+        currentUser === "root" ||
+        (computerPassword.users[currentUser] &&
+          computerPassword.users[currentUser].rootAccess)
+      ) {
+        reboot();
+      }
+      break;
+    case "exel":
+      if (inputParts[1] === "read") {
+        function leerExcel(archivo) {
+          const workbook = xlsx.readFile(archivo);
+          const hoja = workbook.Sheets[workbook.SheetNames[0]];
+          const datos = xlsx.utils.sheet_to_json(hoja, { header: 1 });
+
+          if (datos.length === 0) {
+            console.log("The file is empty or doesn't have data.");
+            return;
+          }
+
+          // Importante: calcular el ancho maximo de cada columna :D
+          let anchos = new Array(datos[0].length).fill(0);
+          datos.forEach(fila => {
+            fila.forEach((celda, i) => {
+              let largo = String(celda || "").length;
+              anchos[i] = Math.max(anchos[i], largo);
+            });
+          });
+
+          // Función para formatear una fila
+          // Le da formato a las filas
+          function formatearFila(fila) {
+            return fila
+              .map((celda, i) => String(celda || "").padEnd(anchos[i]))
+              .join(" | ");
+          }
+
+          // Mostrar tabla
+          console.log(
+            "-".repeat(anchos.reduce((a, b) => a + b, 0) + anchos.length * 3)
+          );
+          datos.forEach(fila => console.log(formatearFila(fila)));
+          console.log(
+            "-".repeat(anchos.reduce((a, b) => a + b, 0) + anchos.length * 3)
+          );
+        }
+        leerExcel(inputParts[2]);
+        break;
+      }
+      break;
     case "qr":
       function generateQR(text) {
         qrcode.generate(text, { small: true }, function(qr) {
@@ -364,12 +447,13 @@ while (true) {
       };
       let lastTime = Date.now();
       const delay = 50; // Delay en milisegundos (por ejemplo, 1 segundo)
-
-      while (true) {
+      let counter = 0;
+      while (counter <= 300) {
         let currentTime = Date.now();
         if (currentTime - lastTime >= delay) {
           a(); // Ejecuta la función
           lastTime = currentTime; // Actualiza el tiempo
+          counter++;
         }
       }
       break;
@@ -652,9 +736,13 @@ while (true) {
       console.log(new Date().toLocaleString());
       break;
     case "pause":
-      const readlinesyncqued = require("readline-sync");
-      let pauseMessage = args.trim() || "Press any key to continue..."; // Si no se especifica un mensaje, usa el mensaje predeterminado
-      readlinesyncqued.keyInPause(pauseMessage);
+      let pauseMessage = inputParts[1] || "Press any key to continue...";
+      let pauseTimes = inputParts[2] || 1;
+      for (var i = 0; i < pauseTimes; i++) {
+        option = rl.keyInYN(pauseMessage, {
+          limit: "sn"
+        });
+      }
       break;
     case "del":
     case "rm":
@@ -898,6 +986,18 @@ while (true) {
       const subcommander = args.split(" ")[1];
 
       switch (subCommand) {
+        case "reboot":
+          if (subcommander === "--no-force") {
+            reboot();
+          }
+          if (
+            currentUser === "root" ||
+            (computerPassword.users[currentUser] &&
+              computerPassword.users[currentUser].rootAccess)
+          ) {
+            reboot();
+          }
+          break;
         case "adb":
           if (currentUser === "default") {
             console.log("Use another account or root, access denied.");
@@ -1006,9 +1106,8 @@ while (true) {
           } else {
             let suPassword = rls.question.question("Insert root password: ");
             if (suPassword === rootPassword) {
-              currentUser = 'root'
+              currentUser = "root";
               console.log(colorfull.color.red("You are now on root!"));
-              
             } else {
               console.log("Wrong root password.");
             }
