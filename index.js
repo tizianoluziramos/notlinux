@@ -200,6 +200,7 @@ while (true) {
   let inputParts = command.trim().split(" ");
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
+  const si = require("systeminformation");
   function obtenerPorcentajeBateria() {
     si.battery()
       .then((data) => {
