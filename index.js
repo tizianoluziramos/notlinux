@@ -37,6 +37,7 @@ let startTime = Date.now();
 /*
  ** Te amo malvina, ojala lo lea
  ** Algun dia ..
+ ** Si supiera que trabajo para la CIA jaja :)
  */
 console.clear();
 const { brainFuckCode } = require("./container/dev/translator/brainfuck.js");
@@ -115,6 +116,7 @@ function getPromptFormat(user, path) {
 /*
  * Viva Command And Conquer 
 */
+
 function runadbcommands(comando, parametros) {
   try {
     const result = execSync(
@@ -187,8 +189,9 @@ if (computerPassword.bootloader.devMode === true) {
       case "":
         break;
       default:
-        console.log(
-          `Command ${command} is not recognized as an internal or external command,program, or executable batch file.`
+        process.stdout.write(
+          `Command ${command} is not recognized as an internal or external command,program, or executable batch file.`,
+          "utf-8"
         );
         break;
     }
@@ -201,6 +204,9 @@ while (true) {
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
+    case "readme":
+      process.stdout.write("Algun dia lo leera, pero mientras no llege ese momento. La verdad que trabajo para la CIA ")
+      break;
     case "translate":
       switch (inputParts[1]) {
         case "brainfuck":
