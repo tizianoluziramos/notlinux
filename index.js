@@ -236,6 +236,9 @@ while (true) {
           }
           reloadBatteryStatus();
           break;
+        case "info":
+          obtenerPorcentajeBateria();
+          break;
         default:
           console.log("Invalid option. Use 'on', 'off', or 'reload'.");
           break;
