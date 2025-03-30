@@ -201,11 +201,6 @@ while (true) {
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
-    case "readme":
-      process.stdout.write(
-        "Algun dia lo leera, pero mientras no llege ese momento. La verdad que trabajo para la CIA "
-      );
-      break;
     case "translate":
       switch (inputParts[1]) {
         case "brainfuck":
