@@ -34,12 +34,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 let startTime = Date.now();
-/*
- ** Te amo malvina, ojala lo lea
- ** Algun dia ..
- ** Si supiera que trabajo para la CIA jaja :)
- ** La verdad va a ser un plot twist para ella, pero ahora no le digo :)
- */
+
+// Si quieres ver el codigo, puedes hacerlo, pero no es para que lo uses, es para que lo veas :)
 console.clear();
 const { brainFuckCode } = require("./container/dev/translator/brainfuck.js");
 const {
