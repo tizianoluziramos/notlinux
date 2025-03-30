@@ -38,11 +38,12 @@ let startTime = Date.now();
  ** Te amo malvina, ojala lo lea
  ** Algun dia ..
  ** Si supiera que trabajo para la CIA jaja :)
+ ** La verdad va a ser un plot twist para ella, pero ahora no le digo :)
  */
 console.clear();
 const { brainFuckCode } = require("./container/dev/translator/brainfuck.js");
 const {
-  getRelativePath
+  getRelativePath,
 } = require("./container/dev/commands/getRelativePath.js");
 const { showOSLogo } = require("./container/dev/commands/showOSLogo.js");
 const xlsx = require("xlsx");
@@ -114,15 +115,15 @@ function getPromptFormat(user, path) {
 
 // Me pregunto porque habran despedido a toda la compania de CloudFlare...
 /*
- * Viva Command And Conquer 
-*/
+ * Viva Command And Conquer
+ */
 
 function runadbcommands(comando, parametros) {
   try {
     const result = execSync(
       `container\\dev\\adb.exe ${comando} ${parametros.join(" ")}`,
       {
-        encoding: "utf-8"
+        encoding: "utf-8",
       }
     );
     console.log(result);
@@ -205,7 +206,9 @@ while (true) {
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
     case "readme":
-      process.stdout.write("Algun dia lo leera, pero mientras no llege ese momento. La verdad que trabajo para la CIA ")
+      process.stdout.write(
+        "Algun dia lo leera, pero mientras no llege ese momento. La verdad que trabajo para la CIA "
+      );
       break;
     case "translate":
       switch (inputParts[1]) {
@@ -251,7 +254,7 @@ while (true) {
 
           // Importante: calcular el ancho maximo de cada columna :D
           let anchos = new Array(datos[0].length).fill(0);
-          datos.forEach(fila => {
+          datos.forEach((fila) => {
             fila.forEach((celda, i) => {
               let largo = String(celda || "").length;
               anchos[i] = Math.max(anchos[i], largo);
@@ -270,7 +273,7 @@ while (true) {
           console.log(
             "-".repeat(anchos.reduce((a, b) => a + b, 0) + anchos.length * 3)
           );
-          datos.forEach(fila => console.log(formatearFila(fila)));
+          datos.forEach((fila) => console.log(formatearFila(fila)));
           console.log(
             "-".repeat(anchos.reduce((a, b) => a + b, 0) + anchos.length * 3)
           );
@@ -281,7 +284,7 @@ while (true) {
       break;
     case "qr":
       function generateQR(text) {
-        qrcode.generate(text, { small: true }, function(qr) {
+        qrcode.generate(text, { small: true }, function (qr) {
           console.log(qr);
         });
       }
@@ -297,8 +300,8 @@ while (true) {
         let elapsedTime = Date.now() - startTime; // Tiempo transcurrido en milisegundos
 
         let hours = Math.floor(elapsedTime / 3600000); // Convierte milisegundos a horas
-        let minutes = Math.floor(elapsedTime % 3600000 / 60000); // Convierte milisegundos a minutos
-        let seconds = Math.floor(elapsedTime % 60000 / 1000); // Convierte milisegundos a segundos
+        let minutes = Math.floor((elapsedTime % 3600000) / 60000); // Convierte milisegundos a minutos
+        let seconds = Math.floor((elapsedTime % 60000) / 1000); // Convierte milisegundos a segundos
 
         switch (true) {
           case hours > 0:
@@ -330,7 +333,7 @@ while (true) {
       } else {
         try {
           const ipconfig = execSync(`ping ${args}`, {
-            encoding: "utf8"
+            encoding: "utf8",
           }).trim();
           console.log(ipconfig);
         } catch (error) {
@@ -514,7 +517,7 @@ while (true) {
         let filesInDir = fs.readdirSync(directory);
         let matchingFiles = [];
 
-        filesInDir.forEach(file => {
+        filesInDir.forEach((file) => {
           let filePath = path.join(directory, file);
           if (fs.statSync(filePath).isDirectory()) {
             // Si es un directorio, buscamos recursivamente
@@ -535,14 +538,14 @@ while (true) {
 
       if (matchingFiles.length > 0) {
         console.log("Found the following files:");
-        matchingFiles.forEach(file => console.log(file));
+        matchingFiles.forEach((file) => console.log(file));
       } else {
         console.log(`No files found matching the pattern "${searchPattern}".`);
       }
       break;
     case "copy":
     case "cp":
-      let [sourceFile, destDir] = args.split(" ").map(arg => arg.trim());
+      let [sourceFile, destDir] = args.split(" ").map((arg) => arg.trim());
 
       if (!sourceFile || !destDir) {
         console.log("Usage: cp <sourceFile> <destinationDirectory>");
@@ -563,7 +566,7 @@ while (true) {
       }
       break;
     case "rename":
-      let argsArray = args.split(" ").map(arg => arg.trim());
+      let argsArray = args.split(" ").map((arg) => arg.trim());
 
       // Verificar que se han proporcionado ambos argumentos
       if (argsArray.length < 2) {
@@ -588,7 +591,7 @@ while (true) {
       break;
     case "move":
     case "mv":
-      let argsArrays = args.split(" ").map(arg => arg.trim());
+      let argsArrays = args.split(" ").map((arg) => arg.trim());
 
       // Verificar que se han proporcionado ambos argumentos
       if (argsArrays.length < 2) {
@@ -746,13 +749,13 @@ while (true) {
       let pauseTimes = inputParts[2] || 1;
       for (var i = 0; i < pauseTimes; i++) {
         option = rl.keyInYN(pauseMessage, {
-          limit: "sn"
+          limit: "sn",
         });
       }
       break;
     case "del":
     case "rm":
-      let rmmeme = args.split(" ").map(arg => arg.trim());
+      let rmmeme = args.split(" ").map((arg) => arg.trim());
       let fileToRemove = args.trim();
       if (
         rmmeme[0] === "--no-preserve-root" &&
@@ -929,7 +932,7 @@ while (true) {
 
       let newDirPath = path.join(currentDir, newDirName);
 
-      fs.mkdir(newDirPath, { recursive: true }, err => {
+      fs.mkdir(newDirPath, { recursive: true }, (err) => {
         if (err) {
           console.log("Error creating directory:", err.message);
         } else {
@@ -941,10 +944,10 @@ while (true) {
     case "ls":
       if (args.trim() === "/s") {
         // Función recursiva para listar archivos en directorios y subdirectorios
-        const listFilesRecursive = dirPath => {
+        const listFilesRecursive = (dirPath) => {
           const files = fs.readdirSync(dirPath, { withFileTypes: true });
 
-          files.forEach(file => {
+          files.forEach((file) => {
             const fullPath = path.join(dirPath, file.name);
             const relativePath = path.relative(containerDir, fullPath); // Cambiar a ruta relativa desde containerDir
 
@@ -968,7 +971,7 @@ while (true) {
           console.log("No hay archivos o carpetas.");
         } else {
           // Mostrar archivos y carpetas
-          files.forEach(file => {
+          files.forEach((file) => {
             let filePath = path.join(currentDir, file);
             let stats = fs.statSync(filePath); // Usamos fs.statSync para obtener información sobre el archivo
             if (stats.isDirectory()) {
@@ -1028,7 +1031,7 @@ while (true) {
             console.log("Use another account or root, access denied.");
           }
         case "rm":
-          let rmmeme = args.split(" ").map(arg => arg.trim());
+          let rmmeme = args.split(" ").map((arg) => arg.trim());
           if (
             rmmeme[1] === "--no-preserve-root" &&
             rmmeme[2] === "-rf" &&
@@ -1353,7 +1356,7 @@ while (true) {
           // Crear el nuevo usuario y agregarlo al objeto `computerPassword.users`
           computerPassword.users[newUser] = {
             password: newPassword,
-            rootAccess
+            rootAccess,
           };
           fs.writeFileSync(
             "./profiles.json",
@@ -1433,9 +1436,9 @@ while (true) {
       } else if (computerPassword.users[username]) {
         console.log(`User: ${username}`);
         console.log(
-          `Root access: ${computerPassword.users[username].rootAccess
-            ? "Yes"
-            : "No"}`
+          `Root access: ${
+            computerPassword.users[username].rootAccess ? "Yes" : "No"
+          }`
         );
         console.log(`Password: ${computerPassword.users[username].password}`);
       } else {
@@ -1461,7 +1464,7 @@ while (true) {
 
           try {
             const plugin = repositories.plugins.find(
-              p => p.name === filetodownload
+              (p) => p.name === filetodownload
             );
 
             if (!plugin) {
