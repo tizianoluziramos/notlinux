@@ -1498,8 +1498,37 @@ while (true) {
       break;
     case "poc":
       const [subcommand, subparam] = args.split(" ");
-
+      const pluginsFolder = path.join(__dirname, "plugins");
+      let filesInPlugins = fs.readdirSync(pluginsFolder);
+      // If the file ends with a spesific string, dont show it.
+      // Skip folders also :)
+      filesInPlugins = filesInPlugins.filter((file) => {
+        const filePath = path.join(pluginsFolder, file);
+        return fs.statSync(filePath).isFile();
+      });
+      filesInPlugins = filesInPlugins.filter((file) => !file.endsWith(".json"));
+      filesInPlugins = filesInPlugins.filter((file) => !file.endsWith(".map"));
+      filesInPlugins = filesInPlugins.filter((file) => !file.endsWith(".ts"));
+      filesInPlugins = filesInPlugins.filter((file) => !file.endsWith(".js"));
+      filesInPlugins = filesInPlugins.filter(
+        (file) => !file.endsWith(".ts.map")
+      );
+      filesInPlugins = filesInPlugins.filter(
+        (file) => !file.endsWith(".js.map")
+      );
+      filesInPlugins = filesInPlugins.filter((file) => !file.endsWith(".d.ts"));
+      filesInPlugins = filesInPlugins.filter(
+        (file) => !file.endsWith(".d.ts.map")
+      );
       switch (subcommand) {
+        case "packages":
+          let packages = filesInPlugins.map((file) => file.replace(".cjs", ""));
+          if (packages.length === 0) {
+            console.log("No packages installed.");
+          } else {
+            console.log(`You can install: ${packages.join(", ")}`);
+          }
+          break;
         case "-v":
         case "-version":
         case "--v":
@@ -1611,5 +1640,3 @@ while (true) {
       break;
   }
 }
-
-// RAMA DE TESTING
