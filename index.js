@@ -47,6 +47,7 @@ const qrcode = require("qrcode-terminal");
 const rls = require("./node_boludes/readline-sync/index.cjs");
 const colorfull = require("./node_boludes/chalk/index.js");
 const fs = require("fs");
+const si = require("systeminformation");
 const path = require("path");
 const rl = require("readline-sync");
 let computerPassword = fs.readFileSync("./profiles.json", "utf-8");
@@ -141,6 +142,31 @@ function reboot(a = false) {
   return;
 }
 
+function obtenerPorcentajeBateria() {
+  try {
+    // Ejecutamos el comando de Windows para obtener el estado de la batería
+    const output = execSync(
+      "WMIC PATH Win32_Battery Get EstimatedChargeRemaining",
+      { encoding: "utf-8" }
+    );
+
+    // Limpiamos la salida y buscamos el porcentaje de batería
+    let percentage = Number(output.split("\n")[1].trim());
+    if (isNaN(percentage)) {
+      console.log("No battery detected.");
+      return;
+    }
+    if (percentage) {
+      // Si encontramos el porcentaje, lo mostramos
+      console.log(`Remaining: ${percentage}%`);
+    } else {
+      console.log("No battery detected.");
+    }
+  } catch (error) {
+    console.error("A shitty error ocurred while running the app:", error);
+  }
+}
+
 console.clear();
 showOSLogo();
 
@@ -200,16 +226,6 @@ while (true) {
   let inputParts = command.trim().split(" ");
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
-  const si = require("systeminformation");
-  function obtenerPorcentajeBateria() {
-    si.battery()
-      .then((data) => {
-        console.log(`El porcentaje de batería actual es: ${data.percent}%`);
-      })
-      .catch((error) => {
-        console.error("Error al obtener el estado de la batería:", error);
-      });
-  }
   switch (mainCommand) {
     case "power":
       if (!inputParts[1]) {
