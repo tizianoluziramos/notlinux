@@ -34,7 +34,6 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 let startTime = Date.now();
-
 // Si quieres ver el codigo, puedes hacerlo, pero no es para que lo uses, es para que lo veas :)
 console.clear();
 const { brainFuckCode } = require("./container/dev/translator/brainfuck.js");
@@ -60,6 +59,7 @@ let rootPassword = computerPassword.rootpassword;
 const { execSync } = require("child_process");
 let userHomeDir = path.join(__dirname, "container", "home", currentUser);
 const clothconfigapi = require("./container/var/software/distribution/package/clothconfigapi.cjs");
+const { startupSnapshot } = require("v8");
 require("./container/dev/commands/bootmessage.js");
 if (!fs.existsSync(userHomeDir)) {
   fs.mkdirSync(userHomeDir, { recursive: true });
