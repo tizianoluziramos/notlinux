@@ -111,8 +111,8 @@ function getPromptFormat(user, path) {
 
 // Me pregunto porque habran despedido a toda la compania de CloudFlare...
 /*
-** Viva Command And Conquer
-*/
+ ** Viva Command And Conquer
+ */
 
 function runadbcommands(comando, parametros) {
   try {
@@ -200,7 +200,47 @@ while (true) {
   let inputParts = command.trim().split(" ");
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
+  function obtenerPorcentajeBateria() {
+    si.battery()
+      .then((data) => {
+        console.log(`El porcentaje de batería actual es: ${data.percent}%`);
+      })
+      .catch((error) => {
+        console.error("Error al obtener el estado de la batería:", error);
+      });
+  }
   switch (mainCommand) {
+    case "power":
+      if (!inputParts[1]) {
+        console.log("Usage: power <on/off> <reload>");
+      }
+      switch (inputParts[1]) {
+        case "on":
+          if (computerPassword.battery === true) {
+            console.log("Battery is already power on.");
+          } else {
+            computerPassword.battery = true;
+          }
+          break;
+        case "off":
+          if (computerPassword.battery === false) {
+            console.log("Battery is already power off.");
+          } else {
+            computerPassword.battery = false;
+          }
+          break;
+        case "reload":
+          console.log("Reloading battery status...");
+          function reloadBatteryStatus() {
+            console.log("Battery status reloaded.");
+          }
+          reloadBatteryStatus();
+          break;
+        default:
+          console.log("Invalid option. Use 'on', 'off', or 'reload'.");
+          break;
+      }
+      break;
     case "translate":
       switch (inputParts[1]) {
         case "brainfuck":

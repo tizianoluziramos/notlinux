@@ -1,6 +1,7 @@
 {
   "bootkey": "pc",
   "enabled": true,
+  "battery": false,
   "rootpassword": "adminjk123",
   "commander": "${user}@tryhackme (${path}) $ ",
   "pcnamecolor": "#00008B",

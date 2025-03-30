@@ -13,6 +13,9 @@
   "dependencies": {
     "express": "^4.21.2",
     "noble": "^1.9.1",
-    "ora": "^8.2.0"
+    "ora": "^8.2.0",
+    "qrcode-terminal": "^0.12.0",
+    "readline-sync": "^1.4.10",
+    "xlsx": "^0.18.5"
   }
 }
