@@ -1512,7 +1512,10 @@ while (true) {
           break;
         case "download":
           const [invalid, filetodownload] = args.split(" ");
-
+          if (filetodownload === undefined) {
+            console.log(`Usage: poc download <plugin>`);
+            break;
+          }
           try {
             const plugin = repositories.plugins.find(
               (p) => p.name === filetodownload
