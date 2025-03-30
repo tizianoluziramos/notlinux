@@ -111,8 +111,8 @@ function getPromptFormat(user, path) {
 
 // Me pregunto porque habran despedido a toda la compania de CloudFlare...
 /*
- * Viva Command And Conquer
- */
+** Viva Command And Conquer
+*/
 
 function runadbcommands(comando, parametros) {
   try {
