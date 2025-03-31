@@ -53,6 +53,7 @@ let computerPassword = fs.readFileSync("./profiles.json", "utf-8");
 let repositories = fs.readFileSync("./plugins/repositories.json", "utf-8");
 require("./container/boot/bootKernel.js");
 repositories = JSON.parse(repositories);
+const cow = require("cowsay");
 computerPassword = JSON.parse(computerPassword);
 let currentUser = computerPassword.default.user;
 let rootPassword = computerPassword.rootpassword;
@@ -227,6 +228,15 @@ while (true) {
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
+    case "cowsay":
+      console.log(
+        cow.say({
+          text: `${args}`,
+          e: "oO",
+          T: "U ",
+        })
+      );
+      break;
     case "power":
       if (!inputParts[1]) {
         console.log("Usage: power <on/off> <reload>");
@@ -312,7 +322,7 @@ while (true) {
             });
           });
 
-          // Función para formatear una fila
+          // Funcion para formatear una fila
           // Le da formato a las filas
           function formatearFila(fila) {
             return fila
@@ -371,7 +381,7 @@ while (true) {
         }
       }
 
-      // Llamada periódica a la función para verificar el tiempo transcurrido (puedes invocar esto en cualquier parte)
+      // Llamada periodica a la función para verificar el tiempo transcurrido (puedes invocar esto en cualquier parte)
       function checkUptime() {
         uptime(); // Verifica el tiempo de actividad
       }
