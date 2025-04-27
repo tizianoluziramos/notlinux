@@ -170,139 +170,102 @@ function obtenerPorcentajeBateria() {
 console.clear();
 showOSLogo();
 
-if (computerPassword.bootloader.devMode === true) {
-  void String(
-    process.stdout.write(
-      `${colorfull.color.green(
-        "You are now in developer mode, any command here will be permanently run in root access, dont do some shit \n"
-      )}`,
-      "utf-8"
-    )
-  );
-  while (true) {
-    let command = rls.question.question(
-      getPromptFormat(currentUser, currentDir)
-    );
-    let inputParts = command.trim().split(" ");
-    mainCommand = inputParts[0];
-    switch (mainCommand) {
-      case "clear":
-      case "cls":
-        console.clear();
-        break;
-      case "tpm":
-        switch (inputParts[1]) {
-          case "info":
-            let retorno = execSync(
-              'powershell -Command "Get-Tpm | ConvertTo-Json"',
-              {
-                encoding: "utf-8",
-              }
-            );
-            try {
-              const tpmInfo = JSON.parse(retorno);
-
-              console.log("=== TPM Information ===");
-              console.log(`Present: ${tpmInfo.TpmPresent}`);
-              console.log(`Ready: ${tpmInfo.TpmReady}`);
-              console.log(`Enabled: ${tpmInfo.TpmEnabled}`);
-              console.log(`Activated: ${tpmInfo.TpmActivated}`);
-              console.log(`Owned: ${tpmInfo.TpmOwned}`);
-              console.log(`Restart Pending: ${tpmInfo.RestartPending}`);
-              console.log(`Manufacturer ID: ${tpmInfo.ManufacturerId}`);
-              console.log(
-                `Manufacturer (text): ${tpmInfo.ManufacturerIdTxt?.replace(
-                  /\u0000/g,
-                  ""
-                )}`
-              );
-              console.log(
-                `Manufacturer Version: ${tpmInfo.ManufacturerVersion?.replace(
-                  /\u0000/g,
-                  ""
-                )}`
-              );
-              console.log(
-                `Full Version: ${tpmInfo.ManufacturerVersionFull20?.replace(
-                  /\u0000/g,
-                  ""
-                )}`
-              );
-              console.log(`Managed Auth Level: ${tpmInfo.ManagedAuthLevel}`);
-              console.log(
-                `Owner Auth: ${tpmInfo.OwnerAuth ?? "Not available"}`
-              );
-              console.log(
-                `Owner Clear Disabled: ${tpmInfo.OwnerClearDisabled}`
-              );
-              console.log(`Auto Provisioning: ${tpmInfo.AutoProvisioning}`);
-              console.log(`Locked Out: ${tpmInfo.LockedOut}`);
-              console.log(`Lockout Heal Time: ${tpmInfo.LockoutHealTime}`);
-              console.log(`Lockout Count: ${tpmInfo.LockoutCount}`);
-              console.log(`Lockout Max: ${tpmInfo.LockoutMax}`);
-              console.log(
-                `Self Test Result: ${
-                  Array.isArray(tpmInfo.SelfTest) && tpmInfo.SelfTest.length > 0
-                    ? tpmInfo.SelfTest
-                    : "No errors"
-                }`
-              );
-            } catch (e) {
-              console.error("Failed to parse TPM JSON:", e);
-              console.log("Raw PowerShell output:");
-              console.log(stdout);
-            }
-            break;
-          default:
-            break;
-        }
-
-        break;
-      case "kernel":
-        if (
-          Boolean(
-            computerPassword.bootloader.kernel.allowCallbackRequest_write
-          ) === true
-        ) {
-          process.stdout.write(`Kernel Info: \n`, "utf-8");
-          process.stdout.write(
-            `${computerPassword.bootloader.kernel.lenguage}\n`,
-            "utf-8"
-          );
-        } else {
-          process.stdout.write(
-            "Kernel Info is disabled on Developer Mode Config \n",
-            "utf-8"
-          );
-          break;
-        }
-        break;
-      case "":
-        break;
-      default:
-        process.stdout.write(
-          `Command ${command} is not recognized as an internal or external command,program, or executable batch file.\n`,
-          "utf-8"
-        );
-        break;
-    }
-  }
-}
-
 while (true) {
   let command = rls.question.question(getPromptFormat(currentUser, currentDir));
   let inputParts = command.trim().split(" ");
   mainCommand = inputParts[0];
   let args = inputParts.slice(1).join(" ");
   switch (mainCommand) {
+    case "kernel":
+      if (
+        Boolean(
+          computerPassword.bootloader.kernel.allowCallbackRequest_write
+        ) === true
+      ) {
+        process.stdout.write(`Kernel Info: \n`, "utf-8");
+        process.stdout.write(
+          `${computerPassword.bootloader.kernel.lenguage}\n`,
+          "utf-8"
+        );
+      } else {
+        process.stdout.write(
+          "Kernel Info is disabled on Developer Mode Config \n",
+          "utf-8"
+        );
+        break;
+      }
+      break;
+    case "tpm":
+      switch (inputParts[1]) {
+        case "info":
+          let retorno = execSync(
+            'powershell -Command "Get-Tpm | ConvertTo-Json"',
+            {
+              encoding: "utf-8",
+            }
+          );
+          try {
+            const tpmInfo = JSON.parse(retorno);
+
+            console.log("=== TPM Information ===");
+            console.log(`Present: ${tpmInfo.TpmPresent}`);
+            console.log(`Ready: ${tpmInfo.TpmReady}`);
+            console.log(`Enabled: ${tpmInfo.TpmEnabled}`);
+            console.log(`Activated: ${tpmInfo.TpmActivated}`);
+            console.log(`Owned: ${tpmInfo.TpmOwned}`);
+            console.log(`Restart Pending: ${tpmInfo.RestartPending}`);
+            console.log(`Manufacturer ID: ${tpmInfo.ManufacturerId}`);
+            console.log(
+              `Manufacturer (text): ${tpmInfo.ManufacturerIdTxt?.replace(
+                /\u0000/g,
+                ""
+              )}`
+            );
+            console.log(
+              `Manufacturer Version: ${tpmInfo.ManufacturerVersion?.replace(
+                /\u0000/g,
+                ""
+              )}`
+            );
+            console.log(
+              `Full Version: ${tpmInfo.ManufacturerVersionFull20?.replace(
+                /\u0000/g,
+                ""
+              )}`
+            );
+            console.log(`Managed Auth Level: ${tpmInfo.ManagedAuthLevel}`);
+            console.log(`Owner Auth: ${tpmInfo.OwnerAuth ?? "Not available"}`);
+            console.log(`Owner Clear Disabled: ${tpmInfo.OwnerClearDisabled}`);
+            console.log(`Auto Provisioning: ${tpmInfo.AutoProvisioning}`);
+            console.log(`Locked Out: ${tpmInfo.LockedOut}`);
+            console.log(`Lockout Heal Time: ${tpmInfo.LockoutHealTime}`);
+            console.log(`Lockout Count: ${tpmInfo.LockoutCount}`);
+            console.log(`Lockout Max: ${tpmInfo.LockoutMax}`);
+            console.log(
+              `Self Test Result: ${
+                Array.isArray(tpmInfo.SelfTest) && tpmInfo.SelfTest.length > 0
+                  ? tpmInfo.SelfTest
+                  : "No errors"
+              }`
+            );
+          } catch (e) {
+            console.error("Failed to parse TPM JSON:", e);
+            console.log("Raw PowerShell output:");
+            console.log(stdout);
+          }
+          break;
+      }
+      break;
     case "cowsay":
-      console.log(
-        cow.say({
-          text: `${args}`,
-          e: "oO",
-          T: "U ",
-        })
-      );
+      if (args) {
+        console.log(
+          cow.say({
+            text: `${args}`,
+            e: "oO",
+            T: "U ",
+          })
+        );
+      }
       break;
     case "power":
       if (!inputParts[1]) {
