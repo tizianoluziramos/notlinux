@@ -32,7 +32,7 @@
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
+// Recovered hacked project
 let startTime = Date.now();
 // Si quieres ver el codigo, puedes hacerlo, pero no es para que lo uses, es para que lo veas :)
 console.clear();
